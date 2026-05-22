@@ -69,6 +69,13 @@ function readJpegDimensions(filePath) {
   await desktop.fill('input[name="district"]', "Mumbai Suburban");
   await desktop.fill('input[name="instagram"]', "@dsp_member");
   await desktop.setInputFiles('input[name="photo"]', sampleImage);
+  await desktop.locator(".card-photo img").waitFor({ state: "visible" });
+  const downloadPromise = desktop.waitForEvent("download");
+  await desktop.click('button:has-text("Download JPG")');
+  const download = await downloadPromise;
+  const downloadPath = path.join(__dirname, "..", "assets", "membership-card-qa.jpg");
+  await download.saveAs(downloadPath);
+  const jpgDimensions = readJpegDimensions(downloadPath);
   await desktop.click('button:has-text("Generate Membership Card")');
   await desktop.waitForFunction(() => {
     const text = document.querySelector(".form-status")?.textContent || "";
@@ -83,17 +90,26 @@ function readJpegDimensions(filePath) {
   const formNote = await desktop.locator(".form-status").innerText();
   const cardText = await desktop.locator(".membership-card").innerText();
   const cardBox = await desktop.locator(".membership-card").boundingBox();
+  const cardVisuals = await desktop.evaluate(() => ({
+    premiumShell: Boolean(document.querySelector(".card-premium-shell")),
+    idPanel: Boolean(document.querySelector(".card-id-panel")),
+    qrMark: Boolean(document.querySelector(".card-qr-mark")),
+    qrHref: document.querySelector(".card-qr-mark")?.getAttribute("href") || "",
+    qrSrc: document.querySelector(".card-qr-mark img")?.getAttribute("src") || "",
+    bottle: Boolean(document.querySelector(".card-whiskey-bottle")),
+    logoWidth: Math.round(document.querySelector(".card-brand img")?.getBoundingClientRect().width || 0),
+    dataRows: document.querySelectorAll(".card-data-row").length,
+    idPanelGeometry: (() => {
+      const card = document.querySelector(".membership-card")?.getBoundingClientRect();
+      const panel = document.querySelector(".card-id-panel")?.getBoundingClientRect();
+      if (!card || !panel) return null;
+      return {
+        topRatio: Number(((panel.top - card.top) / card.height).toFixed(2)),
+        heightRatio: Number((panel.height / card.height).toFixed(2)),
+      };
+    })(),
+  }));
   const submissionBlocked = !formNote.includes("Membership generated");
-  let jpgDimensions = null;
-
-  if (!submissionBlocked) {
-    const downloadPromise = desktop.waitForEvent("download");
-    await desktop.click('button:has-text("Download JPG")');
-    const download = await downloadPromise;
-    const downloadPath = path.join(__dirname, "..", "assets", "membership-card-qa.jpg");
-    await download.saveAs(downloadPath);
-    jpgDimensions = readJpegDimensions(downloadPath);
-  }
   await desktop.screenshot({ path: "assets/desktop-qa.png", fullPage: true });
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 920 }, isMobile: true });
@@ -120,6 +136,7 @@ function readJpegDimensions(filePath) {
     formNote,
     submissionBlocked,
     cardHasMembershipId: /DSP-[A-Z]{2}-[A-Z]{3}-\d{5}/.test(cardText),
+    cardVisuals,
     cardAspectRatio: cardBox ? Number((cardBox.width / cardBox.height).toFixed(2)) : null,
     jpgDimensions,
     sampleImageExists: fs.existsSync(sampleImage),
@@ -149,10 +166,21 @@ function readJpegDimensions(filePath) {
     !result.desktopMetrics.missionText.includes("practical alcohol policies") ||
     result.desktopMetrics.heroImageFit !== "contain" ||
     result.mobileMetrics.heroImageFit !== "contain" ||
+    !result.cardVisuals.premiumShell ||
+    !result.cardVisuals.idPanel ||
+    !result.cardVisuals.qrMark ||
+    result.cardVisuals.qrHref !== "https://darusamajparty.online" ||
+    result.cardVisuals.qrSrc !== "/assets/dsp-website-qr.svg" ||
+    !result.cardVisuals.bottle ||
+    result.cardVisuals.logoWidth < 56 ||
+    result.cardVisuals.dataRows !== 3 ||
+    !result.cardVisuals.idPanelGeometry ||
+    result.cardVisuals.idPanelGeometry.topRatio < 0.58 ||
+    result.cardVisuals.idPanelGeometry.heightRatio > 0.24 ||
     (!result.submissionBlocked && !result.cardHasMembershipId) ||
-    (!result.submissionBlocked && !result.jpgDimensions) ||
-    (!result.submissionBlocked && result.jpgDimensions.width !== 1080) ||
-    (!result.submissionBlocked && result.jpgDimensions.height !== 1350) ||
+    !result.jpgDimensions ||
+    result.jpgDimensions.width !== 1080 ||
+    result.jpgDimensions.height !== 1350 ||
     !result.sampleImageExists
   ) {
     process.exitCode = 1;

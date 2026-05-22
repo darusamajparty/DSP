@@ -34,6 +34,8 @@ const initialForm: FormState = {
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 const IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
 const DSP_LOGO_SRC = "/assets/dsp-logo.jpeg";
+const WHISKEY_BOTTLE_SRC = "/assets/whiskey-bottle.svg";
+const DSP_WEBSITE_QR_SRC = "/assets/dsp-website-qr.svg";
 
 function cleanInstagram(value: string) {
   const trimmed = value.trim();
@@ -129,13 +131,14 @@ function fitText(
   startSize: number,
   family: string,
   weight = "900",
+  minSize = 44,
 ) {
   let size = startSize;
   do {
     ctx.font = `${weight} ${size}px ${family}`;
     if (ctx.measureText(text).width <= maxWidth) return size;
     size -= 4;
-  } while (size >= 44);
+  } while (size >= minSize);
   return size;
 }
 
@@ -253,9 +256,11 @@ export default function JoinExperience() {
     setIsDownloading(true);
     setError("");
     try {
-      const [image, logo] = await Promise.all([
+      const [image, logo, bottle, websiteQr] = await Promise.all([
         loadCanvasImage(previewMember.photoUrl),
         loadCanvasImage(DSP_LOGO_SRC),
+        loadCanvasImage(WHISKEY_BOTTLE_SRC),
+        loadCanvasImage(DSP_WEBSITE_QR_SRC),
       ]);
       const canvas = document.createElement("canvas");
       canvas.width = 1080;
@@ -278,97 +283,138 @@ export default function JoinExperience() {
 
       ctx.fillStyle = "rgba(255, 243, 212, 0.07)";
       ctx.font = "400 330px Impact, Arial Black, sans-serif";
-      ctx.fillText("DSP", 420, 860);
+      ctx.fillText("DSP", 720, 760);
+
+      ctx.strokeStyle = "#d7aa37";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(34, 34, 1012, 1282);
+      ctx.strokeStyle = "rgba(255, 212, 59, 0.54)";
+      ctx.lineWidth = 2;
+      ctx.strokeRect(52, 52, 976, 1246);
 
       ctx.fillStyle = "#fff3d4";
       ctx.font = "900 28px Arial, sans-serif";
       ctx.save();
       ctx.beginPath();
-      ctx.arc(92, 58, 34, 0, Math.PI * 2);
+      ctx.arc(100, 68, 46, 0, Math.PI * 2);
       ctx.clip();
-      drawCoverImage(ctx, logo, 58, 24, 68, 68);
+      drawCoverImage(ctx, logo, 54, 22, 92, 92);
       ctx.restore();
       ctx.strokeStyle = "#ffd43b";
-      ctx.lineWidth = 4;
+      ctx.lineWidth = 5;
       ctx.beginPath();
-      ctx.arc(92, 58, 34, 0, Math.PI * 2);
+      ctx.arc(100, 68, 46, 0, Math.PI * 2);
       ctx.stroke();
-      ctx.fillText("DARU SAMAJ PARTY", 144, 72);
+      ctx.fillText("DARU SAMAJ PARTY", 164, 76);
       ctx.fillStyle = "#c8ff43";
       ctx.textAlign = "right";
       ctx.fillText("FOUNDING MEMBER", 1016, 72);
       ctx.textAlign = "left";
 
+      ctx.strokeStyle = "rgba(255, 212, 59, 0.72)";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(354, 98);
+      ctx.lineTo(1016, 98);
+      ctx.stroke();
+
       ctx.fillStyle = "#fff3d4";
-      ctx.fillRect(64, 120, 952, 690);
-      drawCoverImage(ctx, image, 78, 134, 924, 662);
-
-      ctx.strokeStyle = "#15110d";
+      ctx.fillRect(70, 156, 452, 622);
+      drawCoverImage(ctx, image, 86, 172, 420, 590);
+      ctx.strokeStyle = "#d7aa37";
       ctx.lineWidth = 8;
-      ctx.strokeRect(64, 120, 952, 690);
+      ctx.strokeRect(70, 156, 452, 622);
+      ctx.strokeStyle = "#15110d";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(88, 174, 416, 586);
 
-      ctx.fillStyle = "rgba(21, 17, 13, 0.72)";
-      ctx.fillRect(78, 610, 924, 186);
+      ctx.fillStyle = "rgba(21, 17, 13, 0.62)";
+      ctx.fillRect(560, 180, 420, 590);
+      ctx.strokeStyle = "rgba(255, 212, 59, 0.4)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(584, 298);
+      ctx.lineTo(956, 298);
+      ctx.moveTo(584, 428);
+      ctx.lineTo(956, 428);
+      ctx.moveTo(584, 556);
+      ctx.lineTo(956, 556);
+      ctx.moveTo(584, 684);
+      ctx.lineTo(956, 684);
+      ctx.stroke();
+
       ctx.fillStyle = "#fff3d4";
       const nameSize = fitText(
         ctx,
         previewMember.name.toUpperCase(),
-        884,
-        84,
+        392,
+        72,
         "Impact, Arial Black, sans-serif",
         "400",
+        28,
       );
       ctx.font = `400 ${nameSize}px Impact, Arial Black, sans-serif`;
-      ctx.fillText(previewMember.name.toUpperCase(), 98, 688);
+      ctx.fillText(previewMember.name.toUpperCase(), 584, 260);
       const handleSize = fitText(
         ctx,
         previewMember.instagram.toUpperCase(),
-        884,
-        58,
+        348,
+        46,
         "Impact, Arial Black, sans-serif",
         "400",
+        28,
       );
+      ctx.fillStyle = "#c8ff43";
       ctx.font = `400 ${handleSize}px Impact, Arial Black, sans-serif`;
-      ctx.fillText(previewMember.instagram.toUpperCase(), 98, 752);
-
-      ctx.fillStyle = "#ffd43b";
-      ctx.font = "900 22px Arial, sans-serif";
-      ctx.fillText(previewMember.membershipId, 64, 860);
-
-      ctx.strokeStyle = "rgba(255, 243, 212, 0.32)";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(64, 900);
-      ctx.lineTo(1016, 900);
-      ctx.stroke();
+      ctx.fillText(previewMember.instagram.toUpperCase(), 650, 376);
 
       ctx.fillStyle = "rgba(255, 243, 212, 0.68)";
       ctx.font = "900 24px Arial, sans-serif";
-      ctx.fillText("STATE", 64, 960);
-      ctx.fillText("DISTRICT", 586, 960);
+      ctx.fillText("STATE", 650, 492);
+      ctx.fillText("DISTRICT", 650, 620);
 
       ctx.fillStyle = "#fff3d4";
-      const stateSize = fitText(ctx, previewMember.state, 420, 46, "Georgia, serif", "900");
-      ctx.font = `900 ${stateSize}px Georgia, serif`;
-      ctx.fillText(previewMember.state, 64, 1016);
-      const districtSize = fitText(ctx, previewMember.district, 420, 46, "Georgia, serif", "900");
-      ctx.font = `900 ${districtSize}px Georgia, serif`;
-      ctx.fillText(previewMember.district, 586, 1016);
+      const stateSize = fitText(ctx, previewMember.state.toUpperCase(), 300, 42, "Arial, sans-serif", "900");
+      ctx.font = `900 ${stateSize}px Arial, sans-serif`;
+      ctx.fillText(previewMember.state.toUpperCase(), 650, 536);
+      const districtSize = fitText(ctx, previewMember.district.toUpperCase(), 300, 42, "Arial, sans-serif", "900");
+      ctx.font = `900 ${districtSize}px Arial, sans-serif`;
+      ctx.fillText(previewMember.district.toUpperCase(), 650, 664);
 
-      ctx.fillStyle = "rgba(255, 243, 212, 0.72)";
-      ctx.font = "900 22px Arial, sans-serif";
-      ctx.fillText("SATIRICAL COMMUNITY MEMBERSHIP", 64, 1070);
-      ctx.fillStyle = "#c8ff43";
-      ctx.textAlign = "right";
-      ctx.fillText("1080 x 1350 JPG", 1016, 1070);
-      ctx.textAlign = "left";
+      ctx.save();
+      ctx.globalAlpha = 0.92;
+      ctx.translate(930, 118);
+      ctx.rotate(0.08);
+      ctx.drawImage(bottle, -24, -24, 54, 152);
+      ctx.restore();
 
-      ctx.fillStyle = "#c8ff43";
-      ctx.fillRect(64, 1180, 952, 48);
-      ctx.fillStyle = "#15110d";
-      ctx.font = "900 22px Arial, sans-serif";
+      ctx.fillStyle = "#fff3d4";
+      ctx.fillRect(64, 846, 952, 250);
+      ctx.strokeStyle = "#d7aa37";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(84, 866, 560, 134);
+      ctx.fillStyle = "#7b1719";
+      ctx.fillRect(112, 902, 504, 70);
+      ctx.fillStyle = "#ffd43b";
+      const idSize = fitText(ctx, previewMember.membershipId, 468, 48, "Impact, Arial Black, sans-serif", "400");
+      ctx.font = `400 ${idSize}px Impact, Arial Black, sans-serif`;
       ctx.textAlign = "center";
-      ctx.fillText("FOLLOW. POST. BUILD THE MOVEMENT.", 540, 1212);
+      ctx.fillText(previewMember.membershipId, 364, 954);
+      ctx.fillStyle = "#7b1719";
+      ctx.font = "900 22px Arial, sans-serif";
+      ctx.fillText("MEMBERSHIP ID", 364, 892);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(738, 880, 160, 160);
+      ctx.drawImage(websiteQr, 748, 890, 140, 140);
+      ctx.strokeStyle = "#d7aa37";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(738, 880, 160, 160);
+      ctx.fillStyle = "#7b1719";
+      ctx.fillRect(66, 1134, 948, 96);
+      ctx.fillStyle = "#c8ff43";
+      ctx.font = "900 26px Arial, sans-serif";
+      ctx.fillText("1080 x 1350 JPG", 540, 1194);
       ctx.textAlign = "left";
 
       const dataUrl = canvas.toDataURL("image/jpeg", 0.96);
@@ -502,6 +548,8 @@ export default function JoinExperience() {
         <div className="card-workbench">
           <div className="membership-card-shell" aria-label="Membership card preview">
             <div className="membership-card" ref={cardRef}>
+              <div className="card-premium-shell" aria-hidden="true" />
+              <img className="card-whiskey-bottle" src={WHISKEY_BOTTLE_SRC} alt="" />
               <div className="card-topline">
                 <span className="card-brand">
                   <img src={DSP_LOGO_SRC} alt="" />
@@ -522,18 +570,33 @@ export default function JoinExperience() {
                 <span>{previewMember.instagram}</span>
               </div>
               <div className="card-location">
-                <div>
+                <div className="card-data-row">
                   <span>State</span>
                   <strong>{previewMember.state}</strong>
                 </div>
-                <div>
+                <div className="card-data-row">
                   <span>District</span>
                   <strong>{previewMember.district}</strong>
                 </div>
+                <div className="card-data-row">
+                  <span>Status</span>
+                  <strong>Active</strong>
+                </div>
               </div>
-              <div className="card-footer">
-                <span>Satirical community membership</span>
-                <strong>1080 x 1350 JPG</strong>
+              <div className="card-id-panel">
+                <div className="card-id-copy">
+                  <span>Membership ID</span>
+                  <strong>{previewMember.membershipId}</strong>
+                </div>
+                <a
+                  className="card-qr-mark"
+                  href="https://darusamajparty.online"
+                  aria-label="Open Daru Samaj Party website"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <img src={DSP_WEBSITE_QR_SRC} alt="" />
+                </a>
               </div>
             </div>
           </div>
