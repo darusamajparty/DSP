@@ -60,6 +60,74 @@ img {
   background-size: 42px 42px;
 }
 
+.social-dock {
+  position: fixed;
+  right: 14px;
+  bottom: 18px;
+  z-index: 30;
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  border: 3px solid var(--ink);
+  background: rgba(255, 243, 212, 0.94);
+  box-shadow: 6px 6px 0 rgba(21, 17, 13, 0.24);
+  backdrop-filter: blur(12px);
+}
+
+.social-link {
+  display: inline-grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 3px solid var(--ink);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.social-link svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.social-facebook svg,
+.social-youtube svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+.social-youtube svg path {
+  fill: var(--red);
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  box-shadow: 4px 4px 0 rgba(21, 17, 13, 0.35);
+  outline: none;
+  transform: translate(-2px, -2px);
+}
+
+.social-instagram {
+  background: linear-gradient(145deg, #f58529, #dd2a7b 45%, #8134af 78%, #515bd4);
+}
+
+.social-facebook {
+  background: #1877f2;
+}
+
+.social-youtube {
+  background: #ff0033;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -77,9 +145,31 @@ img {
 .brand {
   display: flex;
   align-items: center;
-  gap: 9px;
-  font-size: 12px;
+  min-width: 0;
+  gap: 11px;
+  color: var(--ink);
+}
+
+.brand-copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+  line-height: 1;
+}
+
+.brand-kicker {
+  color: var(--red);
+  font-size: 10px;
   font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.brand-name {
+  font-family: var(--font-bebas), Impact, sans-serif;
+  font-size: clamp(24px, 6vw, 31px);
+  font-weight: 400;
+  line-height: 0.88;
   text-transform: uppercase;
 }
 
@@ -113,8 +203,29 @@ img {
   text-transform: uppercase;
 }
 
-.header-cta {
+.header-actions {
   justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-email {
+  display: none;
+  max-width: 240px;
+  min-height: 38px;
+  align-items: center;
+  border: 2px solid rgba(21, 17, 13, 0.28);
+  padding: 0 12px;
+  background: var(--paper-soft);
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.header-cta {
   display: inline-flex;
   min-width: 72px;
   min-height: 38px;
@@ -1063,6 +1174,18 @@ h1 {
   text-transform: uppercase;
 }
 
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px 18px;
+}
+
+.footer-links a:first-child {
+  color: var(--paper-soft);
+  text-transform: none;
+}
+
 @media (max-width: 1040px) {
   .hero-section,
   .split-layout,
@@ -1114,6 +1237,23 @@ h1 {
 }
 
 @media (max-width: 640px) {
+  .social-dock {
+    right: 10px;
+    bottom: 10px;
+    gap: 7px;
+    padding: 6px;
+  }
+
+  .social-link {
+    width: 38px;
+    height: 38px;
+  }
+
+  .social-link svg {
+    width: 19px;
+    height: 19px;
+  }
+
   .manifesto-grid,
   .form-grid {
     grid-template-columns: 1fr;
@@ -1157,7 +1297,14 @@ h1 {
 
   .brand {
     gap: 12px;
-    font-size: 15px;
+  }
+
+  .brand-kicker {
+    font-size: 11px;
+  }
+
+  .brand-name {
+    font-size: 34px;
   }
 
   .brand-mark {
@@ -1173,6 +1320,22 @@ h1 {
   .header-cta {
     min-width: 88px;
     min-height: 42px;
+  }
+}
+
+@media (min-width: 1041px) {
+  .social-dock {
+    top: 50%;
+    right: 18px;
+    bottom: auto;
+    flex-direction: column;
+    transform: translateY(-50%);
+  }
+}
+
+@media (min-width: 1180px) {
+  .header-email {
+    display: inline-flex;
   }
 }
 

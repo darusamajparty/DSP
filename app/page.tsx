@@ -47,16 +47,82 @@ const manifesto = [
   },
 ];
 
+const socialLinks = [
+  {
+    name: "Instagram",
+    href: "https://www.instagram.com/darusamajparty/",
+    className: "social-instagram",
+    icon: "instagram",
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61590468261418",
+    className: "social-facebook",
+    icon: "facebook",
+  },
+  {
+    name: "YouTube",
+    href: "https://www.youtube.com/@darusamajparty",
+    className: "social-youtube",
+    icon: "youtube",
+  },
+];
+
+function SocialIcon({ icon }: { icon: string }) {
+  if (icon === "instagram") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="4" y="4" width="16" height="16" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17" cy="7" r="1.2" />
+      </svg>
+    );
+  }
+
+  if (icon === "facebook") {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14.4 8.2H17V4.4c-.5-.1-2-.2-3.6-.2-3.5 0-5.8 2.1-5.8 6v3.3H4v4.3h3.6V24h4.5v-6.2h3.7l.6-4.3h-4.3v-2.9c0-1.2.4-2.4 2.3-2.4Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="2.5" y="5" width="19" height="14" rx="4" />
+      <path d="M10 9.2v5.6l5.2-2.8L10 9.2Z" />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <>
       <div className="page-texture" aria-hidden="true" />
+      <div className="social-dock" aria-label="Social media links">
+        {socialLinks.map((link) => (
+          <a
+            className={`social-link ${link.className}`}
+            href={link.href}
+            key={link.name}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open Daru Samaj Party on ${link.name}`}
+            title={link.name}
+          >
+            <SocialIcon icon={link.icon} />
+          </a>
+        ))}
+      </div>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Daru Samaj Party home">
           <span className="brand-mark">
             <img src="/assets/dsp-logo.jpeg" alt="" />
           </span>
-          <span>Daru Samaj Party</span>
+          <span className="brand-copy">
+            <span className="brand-kicker">Official Movement</span>
+            <span className="brand-name">Daru Samaj Party</span>
+          </span>
         </a>
         <nav aria-label="Primary navigation">
           <a href="#about">About</a>
@@ -64,9 +130,14 @@ export default function Home() {
           <a href="#vision">Vision</a>
           <a href="#join">Join</a>
         </nav>
-        <a className="header-cta" href="#join">
-          Join
-        </a>
+        <div className="header-actions">
+          <a className="header-email" href="mailto:darusamajparty@gmail.com">
+            darusamajparty@gmail.com
+          </a>
+          <a className="header-cta" href="#join">
+            Join
+          </a>
+        </div>
       </header>
 
       <main id="top">
@@ -74,7 +145,7 @@ export default function Home() {
           <div className="hero-copy">
             <h1>Daru Samaj Party (DSP)</h1>
             <p>
-              The voice of ACP(Alcohol Consuming Persons), the fight for respect. No shame, no
+              The voice of ACPs(Alcohol Consuming Persons), the fight for respect. No shame, no
               discrimination: responsible drinkers deserve rights, safety, and
               convenience.
             </p>
@@ -237,7 +308,10 @@ export default function Home() {
           Satirical community project. Not a real political party. No alcohol
           sale or promotion.
         </span>
-        <a href="#join">Become a member</a>
+        <div className="footer-links">
+          <a href="mailto:darusamajparty@gmail.com">darusamajparty@gmail.com</a>
+          <a href="#join">Become a member</a>
+        </div>
       </footer>
     </>
   );
