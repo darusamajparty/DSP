@@ -176,11 +176,11 @@ export default function Home() {
             <span>Join form live</span>
             <span>Instagram-ready membership card</span>
             <span>State and district chapters</span>
-            <span>Satirical community movement</span>
+            <span>Responsible community movement</span>
             <span>Join form live</span>
             <span>Instagram-ready membership card</span>
             <span>State and district chapters</span>
-            <span>Satirical community movement</span>
+            <span>Responsible community movement</span>
           </div>
         </section>
 
@@ -190,7 +190,7 @@ export default function Home() {
             <div className="about-lead">
               <h2>Responsible drinkers deserve dignity, safety, and basic social respect.</h2>
               <p>
-                Daru Samaj Party is a satirical social movement built around one
+                Daru Samaj Party is a community movement built around one
                 simple idea: adults who drink responsibly should be treated like
                 adults.
               </p>
@@ -303,12 +303,11 @@ export default function Home() {
       </main>
 
       <footer className="site-footer">
-        <strong>Daru Samaj Party</strong>
-        <span>
-          Satirical community project. Not a real political party. No alcohol
-          sale or promotion.
-        </span>
+        <strong>© 2026 Daru Samaj Party</strong>
+        <span>Responsible drinking, dignity, and practical public policy.</span>
         <div className="footer-links">
+          <a href="/terms">Terms & Conditions</a>
+          <a href="/privacy">Privacy Policy</a>
           <a href="mailto:darusamajparty@gmail.com">darusamajparty@gmail.com</a>
           <a href="#join">Become a member</a>
         </div>

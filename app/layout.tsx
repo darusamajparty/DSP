@@ -16,9 +16,9 @@ const bebas = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "Daru Samaj Party | Join The Satirical Movement",
+  title: "Daru Samaj Party | Join The Movement",
   description:
-    "Join Daru Samaj Party, a polished satirical community movement with manifesto, mission, vision, and Instagram-ready membership cards.",
+    "Join Daru Samaj Party, a community movement with manifesto, mission, vision, and Instagram-ready membership cards.",
 };
 
 export default function RootLayout({
