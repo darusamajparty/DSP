@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
 import {
   localeNativeLabels,
   locales,
@@ -19,7 +20,9 @@ export default function LanguageSwitcher({
   currentPath = "/",
   label,
 }: LanguageSwitcherProps) {
-  const pathWithoutLocale = stripLocaleFromPath(currentPath);
+  const pathname = usePathname();
+  const router = useRouter();
+  const pathWithoutLocale = stripLocaleFromPath(pathname || currentPath);
 
   return (
     <label className="language-switcher">
@@ -27,7 +30,7 @@ export default function LanguageSwitcher({
         aria-label={label}
         value={currentLocale}
         onChange={(event) => {
-          window.location.href = localizedPath(event.target.value as Locale, pathWithoutLocale);
+          router.push(localizedPath(event.target.value as Locale, pathWithoutLocale));
         }}
       >
         {locales.map((locale) => (
