@@ -95,6 +95,11 @@ set public = excluded.public,
     allowed_mime_types = excluded.allowed_mime_types;
 
 drop policy if exists "Allow public member photo uploads" on storage.objects;
+create policy "Allow public member photo uploads"
+on storage.objects
+for insert
+to anon
+with check (bucket_id = 'member-photos');
 
 drop policy if exists "Allow public member photo reads" on storage.objects;
 create policy "Allow public member photo reads"
