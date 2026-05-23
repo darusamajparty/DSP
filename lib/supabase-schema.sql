@@ -29,7 +29,7 @@ alter table public.member_submission_rate_limits enable row level security;
 
 create or replace function public.reserve_member_submission(
   p_ip_hash text,
-  p_window interval default interval '1 hour'
+  p_window interval default interval '1 minute'
 )
 returns table (allowed boolean, retry_after_seconds integer)
 language plpgsql

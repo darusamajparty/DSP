@@ -123,7 +123,7 @@ export async function POST(request: NextRequest) {
   const ipHash = hashIp(ip, salt);
   const rateLimit = await supabase.rpc("reserve_member_submission", {
     p_ip_hash: ipHash,
-    p_window: "1 hour",
+    p_window: "1 minute",
   });
 
   if (rateLimit.error) {
@@ -133,8 +133,8 @@ export async function POST(request: NextRequest) {
   const reservation = Array.isArray(rateLimit.data) ? rateLimit.data[0] : rateLimit.data;
 
   if (!reservation?.allowed) {
-    return jsonError("Only one membership submission is allowed per hour.", 429, {
-      retryAfterSeconds: reservation?.retry_after_seconds || 3600,
+    return jsonError("Only one membership submission is allowed per minute.", 429, {
+      retryAfterSeconds: reservation?.retry_after_seconds || 60,
     });
   }
 

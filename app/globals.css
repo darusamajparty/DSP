@@ -870,6 +870,7 @@ h1 {
   gap: 18px;
 }
 
+/* â”€â”€ CARD WORKBENCH SHELL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .membership-card-shell {
   border: 4px solid var(--ink);
   padding: 18px;
@@ -881,6 +882,7 @@ h1 {
     inset 0 1px 0 rgba(255, 212, 59, 0.22);
 }
 
+/* â”€â”€ MEMBERSHIP CARD (inner) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .membership-card {
   position: relative;
   display: block;
@@ -888,67 +890,79 @@ h1 {
   aspect-ratio: 4 / 5;
   min-height: 0;
   overflow: hidden;
-  padding: 0;
+  /* Background matches canvas exactly */
   background:
-    linear-gradient(180deg, #8b1719 0 21%, transparent 21%),
-    linear-gradient(115deg, transparent 0 48%, rgba(215, 170, 55, 0.12) 48% 50%, transparent 50%),
-    radial-gradient(circle at 82% 12%, rgba(255, 212, 59, 0.36), transparent 23%),
-    linear-gradient(152deg, #15110d 0%, #080706 58%, #15110d 100%);
+    radial-gradient(circle at 76% 11%, rgba(255, 212, 59, 0.40) 0%, transparent 22%),
+    linear-gradient(152deg, #83191b 0%, #3a0c10 50%, #120e0b 100%);
   color: var(--paper);
-  border-radius: 18px;
-  box-shadow: inset 0 0 0 2px rgba(255, 212, 59, 0.66), inset 0 0 0 9px rgba(21, 17, 13, 0.8);
 }
 
+/* Ghost "DSP" watermark */
 .membership-card::before {
   content: "DSP";
   position: absolute;
   right: 4%;
-  top: 34%;
+  top: 32%;
+  z-index: 0;
   color: rgba(255, 243, 212, 0.055);
   font-family: var(--font-bebas), Impact, sans-serif;
-  font-size: clamp(120px, 20vw, 210px);
+  font-size: clamp(90px, 17vw, 185px);
   line-height: 1;
-}
-
-.card-premium-shell {
-  position: absolute;
-  inset: 3.5%;
-  z-index: 1;
-  border: 1px solid rgba(255, 212, 59, 0.72);
-  border-radius: 14px;
   pointer-events: none;
 }
 
-.card-topline,
-.card-location,
-.card-footer,
-.card-id-panel {
-  position: relative;
-  z-index: 2;
+/* Gold border frame (inside card, on top of everything) */
+.card-premium-shell {
+  position: absolute;
+  inset: 2.6%;
+  z-index: 10;
+  border: 1px solid rgba(255, 212, 59, 0.54);
+  pointer-events: none;
 }
 
+/* â”€â”€ HEADER (topline) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Canvas: y=0 to CT=168px â†’ 168/1350 = 12.4% of card height       */
 .card-topline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12.4%;
+  z-index: 2;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 14px;
-  padding: 4.4% 6%;
-  font-size: clamp(11px, 1.2vw, 14px);
+  padding: 0 5.6%;
+  gap: 6px;
+  font-size: clamp(9px, 1vw, 13px);
   font-weight: 950;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Gold divider at bottom of header */
+.card-topline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  right: 8%;
+  height: 1px;
+  background: rgba(255, 212, 59, 0.60);
 }
 
 .card-brand {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
+  min-width: 0;
 }
 
 .card-brand img {
-  width: 58px;
-  height: 58px;
+  width: clamp(30px, 5.2vw, 50px);
+  height: clamp(30px, 5.2vw, 50px);
   flex: 0 0 auto;
-  border: 3px solid var(--yellow);
+  border: 2px solid var(--yellow);
   border-radius: 50%;
   object-fit: cover;
 }
@@ -956,36 +970,40 @@ h1 {
 .card-topline strong {
   color: var(--green);
   text-align: right;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
 }
 
+/* â”€â”€ WHISKEY BOTTLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€  */
 .card-whiskey-bottle {
   position: absolute;
-  top: 22.5%;
-  right: 7.2%;
-  z-index: 3;
-  width: 5.2%;
+  top: 13.5%;
+  right: 7%;
+  z-index: 4;
+  width: 4.6%;
   height: auto;
-  opacity: 0.9;
+  opacity: 0.88;
   transform: rotate(5deg);
 }
 
+/* â”€â”€ PHOTO (left column) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Canvas: left=60, top=CT=168, w=440, h=CH=760
+   %      left=5.6%, top=12.4%, w=40.7%, h=56.3%                    */
 .card-photo {
   position: absolute;
   left: 5.6%;
-  top: 10.2%;
+  top: 12.4%;
+  width: 40.7%;
+  height: 56.3%;
   z-index: 2;
   display: grid;
-  width: 40.7%;
-  /* height spans from ~10.2% to ~62.2% → 52% of card */
-  height: 52%;
   place-items: center;
   overflow: hidden;
-  border: clamp(3px, 0.55vw, 6px) solid #d7aa37;
+  border: clamp(2px, 0.45vw, 5px) solid #d7aa37;
   border-radius: 0;
   background: linear-gradient(145deg, #fff3d4, #ead19a);
   color: var(--red);
-  font-size: clamp(14px, 1.8vw, 22px);
+  font-size: clamp(11px, 1.5vw, 17px);
   font-weight: 950;
   text-transform: uppercase;
 }
@@ -996,8 +1014,6 @@ h1 {
 }
 
 .card-photo img {
-  position: relative;
-  z-index: 2;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1006,76 +1022,95 @@ h1 {
 .card-photo span {
   position: relative;
   z-index: 3;
-  max-width: 78%;
-  padding: 10px 12px;
-  border: 2px solid rgba(123, 23, 25, 0.28);
-  background: rgba(255, 243, 212, 0.78);
+  max-width: 80%;
+  padding: 8px 10px;
+  border: 1.5px solid rgba(123, 23, 25, 0.22);
+  background: rgba(255, 243, 212, 0.88);
   text-align: center;
-  line-height: 1;
+  line-height: 1.3;
 }
 
+/* â”€â”€ IDENTITY PANEL (right column) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Canvas: left=520, top=168, w=500, h=760  â†’ right=60
+   %      left=48.1%, top=12.4%, right=5.6%, h=56.3%
+   Inside: rows at canvas offsets CT+80, CT+116(div), CT+206,
+           CT+244(div), CT+306/368, CT+408(div), CT+470/532,
+           CT+572(div), CT+634/706 â€” using space-between flex       */
 .card-identity {
-  /* right column — mirrors canvas info panel */
   position: absolute;
-  left: 48.1%;   /* IX/1080 ≈ 48.1% */
-  right: 5.6%;   /* 60/1080 */
-  top: 10.2%;    /* CT/1350 */
+  left: 48.1%;
+  right: 5.6%;
+  top: 12.4%;
+  height: 56.3%;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  min-width: 0;
-  padding: 4.5% 3% 0 3%;    /* consistent inner padding */
+  justify-content: space-between;
+  padding: 6.5% 7% 5.5%;
   background: rgba(21, 17, 13, 0.66);
-  height: 52%;               /* same as photo */
-  text-align: left;
-  border-top: none;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .card-identity p {
   display: none;
 }
 
-.card-identity h3 {
-  margin: 0 0 3.5%;
+/* Name â€” top of identity panel */
+.card-identity > h3 {
+  margin: 0;
   overflow-wrap: anywhere;
   color: var(--paper);
-  font-size: clamp(22px, 3.4vw, 46px);
-  line-height: 0.95;
+  font-family: var(--font-bebas), Impact, sans-serif;
+  font-size: clamp(16px, 2.6vw, 38px);
+  font-weight: 400;
+  line-height: 0.92;
 }
 
+/* Thin gold divider */
 .card-identity-divider {
   height: 1px;
-  margin-bottom: 4%;
+  flex-shrink: 0;
   background: rgba(255, 212, 59, 0.38);
 }
 
-.card-identity span {
+/* Instagram handle */
+.card-identity > span {
   color: var(--green);
-  font-size: clamp(14px, 1.7vw, 24px);
+  font-size: clamp(10px, 1.4vw, 18px);
   font-weight: 900;
-  margin-bottom: 3.5%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+
+/* Location block (state / district / status rows) */
 .card-location {
-  /* lives INSIDE .card-identity via JSX reuse — not a separate absolute block */
-  display: grid;
-  gap: 0;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-evenly;
   min-width: 0;
 }
 
 .card-data-row {
   min-width: 0;
-  padding: 3.5% 0;
-  border-top: 1px solid rgba(255, 212, 59, 0.28);
+  border-top: 1px solid rgba(255, 212, 59, 0.26);
+  padding-top: 4%;
+}
+
+.card-location > .card-data-row:first-child {
+  border-top: 1px solid rgba(255, 212, 59, 0.26);
 }
 
 .card-location span {
   display: block;
-  color: rgba(255, 243, 212, 0.62);
-  font-size: clamp(10px, 1.1vw, 14px);
+  color: rgba(255, 243, 212, 0.60);
+  font-size: clamp(8px, 0.85vw, 11px);
   font-weight: 950;
   text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.1;
 }
 
 .card-location strong {
@@ -1083,20 +1118,26 @@ h1 {
   max-width: 100%;
   overflow-wrap: anywhere;
   color: var(--paper);
-  font-size: clamp(15px, 1.8vw, 24px);
+  font-size: clamp(12px, 1.4vw, 19px);
+  font-weight: 900;
   line-height: 1.05;
 }
 
+/* â”€â”€ MEMBERSHIP ID PANEL â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Canvas: IDY=948, IDH=176, ID bottom=1124
+   %      top=70.2%, height=13.0%                                    */
 .card-id-panel {
   position: absolute;
   left: 5.6%;
   right: 5.6%;
-  bottom: 6%;
+  top: 70.2%;
+  height: 13%;
+  z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(48px, 14%, 76px);
-  gap: 4%;
+  grid-template-columns: minmax(0, 1fr) clamp(36px, 11%, 64px);
+  gap: 3%;
   align-items: center;
-  padding: 2.8% 4.5%;
+  padding: 0 4%;
   border: 2px solid #d7aa37;
   background: var(--paper-soft);
   color: var(--red-dark);
@@ -1108,19 +1149,22 @@ h1 {
 
 .card-id-copy span {
   display: block;
+  margin-bottom: 4%;
   color: var(--red);
-  font-size: clamp(10px, 1.1vw, 13px);
+  font-size: clamp(7px, 0.8vw, 10px);
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
+  line-height: 1;
 }
 
 .card-id-copy strong {
   display: block;
   min-width: 0;
   overflow-wrap: anywhere;
+  color: #7b1719;
   font-family: var(--font-bebas), Impact, sans-serif;
-  font-size: clamp(24px, 3.8vw, 46px);
+  font-size: clamp(16px, 2.5vw, 34px);
   font-weight: 400;
   line-height: 1;
   text-transform: uppercase;
@@ -1129,17 +1173,13 @@ h1 {
 .card-qr-mark {
   display: block;
   aspect-ratio: 1;
-  padding: 6px;
-  border: 3px solid #d7aa37;
+  padding: 3px;
+  border: 2px solid #d7aa37;
   background: #fff;
-  transition:
-    transform 160ms ease,
-    box-shadow 160ms ease;
 }
 
 .card-qr-mark:hover {
-  box-shadow: 0 0 0 3px rgba(255, 212, 59, 0.18);
-  transform: translateY(-1px);
+  opacity: 0.88;
 }
 
 .card-qr-mark img {
@@ -1149,9 +1189,42 @@ h1 {
   object-fit: contain;
 }
 
+/* â”€â”€ FOOTER BAND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   Canvas: FDY=1150 â†’ 1150/1350 = 85.2%
+   Shows website + hashtag, mirroring canvas footer               */
 .card-footer {
-  display: none;
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 85%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5%;
+  padding-top: 3%;
+  border-top: 1px solid rgba(255, 212, 59, 0.52);
 }
+
+.card-footer span {
+  display: block;
+  color: rgba(255, 243, 212, 0.50);
+  font-size: clamp(7px, 0.8vw, 10px);
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.07em;
+}
+
+.card-footer strong {
+  display: block;
+  color: rgba(200, 255, 67, 0.65);
+  font-size: clamp(6px, 0.72vw, 9px);
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 
 .card-actions {
   display: flex;
@@ -1159,6 +1232,12 @@ h1 {
   align-items: stretch;
   margin-top: 4px;
 }
+
+.card-actions .button {
+  flex: 1;
+}
+
+
 
 .card-actions .button {
   flex: 1;
@@ -1476,7 +1555,7 @@ h1 {
   }
 }
 
-/* ─── Wide desktop: cap content width and refine layout ─── */
+/* â”€â”€â”€ Wide desktop: cap content width and refine layout â”€â”€â”€ */
 @media (min-width: 1280px) {
   .site-header {
     padding: 16px clamp(32px, 4vw, 80px);
@@ -1553,7 +1632,7 @@ h1 {
   }
 }
 
-/* ─── Ultra-wide: global max-width cap ─── */
+/* â”€â”€â”€ Ultra-wide: global max-width cap â”€â”€â”€ */
 @media (min-width: 1600px) {
   .hero-section {
     padding-left: max(120px, calc((100vw - 1480px) / 2));
