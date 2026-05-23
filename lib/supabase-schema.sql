@@ -94,16 +94,17 @@ set public = excluded.public,
     file_size_limit = excluded.file_size_limit,
     allowed_mime_types = excluded.allowed_mime_types;
 
-drop policy if exists "Allow public member photo uploads" on storage.objects;
-create policy "Allow public member photo uploads"
-on storage.objects
-for insert
-to anon
-with check (bucket_id = 'member-photos');
+-- ── Storage security ────────────────────────────────────────────────────
+-- The bucket is public=true, so direct URLs (getPublicUrl) work without
+-- any RLS policy.  We intentionally do NOT grant anon INSERT or SELECT:
+--   • INSERT is unnecessary — uploads go through the server-side API route
+--     which authenticates with service_role (see /api/members/route.ts).
+--     Leaving an anon INSERT policy would let bots flood the bucket.
+--   • SELECT (listing) is unnecessary — public=true already serves objects
+--     by direct URL.  Dropping the policy prevents anonymous enumeration
+--     of all stored photos via the Supabase Storage API.
+-- If you ever need authenticated uploads from the client, create a scoped
+-- policy for the "authenticated" role instead of "anon".
 
+drop policy if exists "Allow public member photo uploads" on storage.objects;
 drop policy if exists "Allow public member photo reads" on storage.objects;
-create policy "Allow public member photo reads"
-on storage.objects
-for select
-to anon
-using (bucket_id = 'member-photos');

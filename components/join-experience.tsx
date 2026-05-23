@@ -23,6 +23,8 @@ type FormState = {
   instagram: string;
 };
 
+type PreviewMember = Omit<MemberRecord, "membershipId">;
+
 const initialForm: FormState = {
   name: "",
   email: "",
@@ -159,10 +161,9 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
   const [isDownloading, setIsDownloading] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const previewMember = useMemo<MemberRecord>(
+  const previewMember = useMemo<PreviewMember>(
     () =>
       member || {
-        membershipId: "DSP-XX-NEW-00001",
         name: form.name || "Your Name",
         email: form.email || "member@example.com",
         phone: form.phone || "+91 00000 00000",
@@ -253,10 +254,14 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
   };
 
   const downloadCard = async () => {
+    if (!member) {
+      return;
+    }
     if (!previewMember.photoUrl) {
       setError(messages.downloadPhotoRequired);
       return;
     }
+    const generatedMembershipId = member.membershipId;
     setIsDownloading(true);
     setError("");
     try {
@@ -461,10 +466,10 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
       ctx.fillStyle = "#7b1719";
       ctx.fillRect(76, IDY + 48, idBoxW, 78);
 
-      const idSize = fitText(ctx, previewMember.membershipId, idBoxW - 20, 52, "Impact, Arial Black, sans-serif", "400");
+      const idSize = fitText(ctx, generatedMembershipId, idBoxW - 20, 52, "Impact, Arial Black, sans-serif", "400");
       ctx.fillStyle = "#ffd43b";
       ctx.font = `400 ${idSize}px Impact, Arial Black, sans-serif`;
-      ctx.fillText(previewMember.membershipId, idCX, IDY + 104);
+      ctx.fillText(generatedMembershipId, idCX, IDY + 104);
       ctx.textAlign = "left";
 
       ctx.fillStyle = "#ffffff";
@@ -509,7 +514,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
       const dataUrl = canvas.toDataURL("image/jpeg", 0.96);
       const link = document.createElement("a");
       link.href = dataUrl;
-      link.download = `${previewMember.membershipId}-dsp-card.jpg`;
+      link.download = `${generatedMembershipId}-dsp-card.jpg`;
       link.click();
     } catch {
       setError(messages.downloadFallback);
@@ -673,21 +678,23 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
                 <span>{messages.card.website}</span>
                 <strong>{messages.card.hashtag}</strong>
               </div>
-              <div className="card-id-panel">
-                <div className="card-id-copy">
-                  <span>{messages.card.membershipId}</span>
-                  <strong>{previewMember.membershipId}</strong>
+              {member ? (
+                <div className="card-id-panel">
+                  <div className="card-id-copy">
+                    <span>{messages.card.membershipId}</span>
+                    <strong>{member.membershipId}</strong>
+                  </div>
+                  <a
+                    className="card-qr-mark"
+                    href="https://darusamajparty.info"
+                    aria-label="Open Daru Samaj Party website"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img src={DSP_WEBSITE_QR_SRC} alt="" />
+                  </a>
                 </div>
-                <a
-                  className="card-qr-mark"
-                  href="https://darusamajparty.info"
-                  aria-label="Open Daru Samaj Party website"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <img src={DSP_WEBSITE_QR_SRC} alt="" />
-                </a>
-              </div>
+              ) : null}
             </div>
           </div>
 
@@ -696,7 +703,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
               className="button button-primary"
               type="button"
               onClick={downloadCard}
-              disabled={isDownloading}
+              disabled={!member || isDownloading}
             >
               {isDownloading ? messages.form.downloading : messages.form.download}
             </button>
