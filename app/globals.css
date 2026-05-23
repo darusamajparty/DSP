@@ -872,9 +872,13 @@ h1 {
 
 .membership-card-shell {
   border: 4px solid var(--ink);
-  padding: 16px;
-  background: linear-gradient(145deg, #120e0b, #7b1719);
-  box-shadow: 14px 14px 0 rgba(21, 17, 13, 0.22);
+  padding: 18px;
+  background:
+    radial-gradient(ellipse at 70% 0%, rgba(255, 212, 59, 0.18) 0%, transparent 56%),
+    linear-gradient(160deg, #1c1009 0%, #7b1719 52%, #120e0b 100%);
+  box-shadow:
+    16px 16px 0 rgba(21, 17, 13, 0.28),
+    inset 0 1px 0 rgba(255, 212, 59, 0.22);
 }
 
 .membership-card {
@@ -957,54 +961,38 @@ h1 {
 
 .card-whiskey-bottle {
   position: absolute;
-  top: 8.2%;
-  right: 9%;
+  top: 22.5%;
+  right: 7.2%;
   z-index: 3;
-  width: 5.8%;
+  width: 5.2%;
   height: auto;
-  opacity: 0.92;
+  opacity: 0.9;
   transform: rotate(5deg);
 }
 
 .card-photo {
   position: absolute;
-  left: 6.5%;
-  top: 23%;
+  left: 5.6%;
+  top: 10.2%;
   z-index: 2;
   display: grid;
-  width: 42%;
-  aspect-ratio: 0.78;
+  width: 40.7%;
+  /* height spans from ~10.2% to ~62.2% → 52% of card */
+  height: 52%;
   place-items: center;
   overflow: hidden;
-  border: clamp(4px, 0.6vw, 7px) solid #d7aa37;
-  border-radius: 18px;
-  background:
-    radial-gradient(circle at 50% 35%, rgba(215, 170, 55, 0.24), transparent 32%),
-    linear-gradient(145deg, #fff3d4, #ead19a);
+  border: clamp(3px, 0.55vw, 6px) solid #d7aa37;
+  border-radius: 0;
+  background: linear-gradient(145deg, #fff3d4, #ead19a);
   color: var(--red);
-  font-size: clamp(15px, 2vw, 24px);
+  font-size: clamp(14px, 1.8vw, 22px);
   font-weight: 950;
   text-transform: uppercase;
 }
 
-.card-photo::before {
-  content: "";
-  position: absolute;
-  width: 34%;
-  aspect-ratio: 1;
-  top: 18%;
-  border-radius: 50%;
-  background: rgba(123, 23, 25, 0.18);
-}
-
+.card-photo::before,
 .card-photo::after {
-  content: "";
-  position: absolute;
-  width: 62%;
-  height: 34%;
-  bottom: 16%;
-  border-radius: 48% 48% 16px 16px;
-  background: rgba(123, 23, 25, 0.18);
+  display: none;
 }
 
 .card-photo img {
@@ -1027,15 +1015,21 @@ h1 {
 }
 
 .card-identity {
+  /* right column — mirrors canvas info panel */
   position: absolute;
-  top: 25.5%;
-  right: 7%;
+  left: 48.1%;   /* IX/1080 ≈ 48.1% */
+  right: 5.6%;   /* 60/1080 */
+  top: 10.2%;    /* CT/1350 */
   z-index: 2;
-  width: 42%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
   min-width: 0;
-  padding-top: 6%;
-  border-top: 1px solid rgba(255, 212, 59, 0.62);
+  padding: 4.5% 3% 0 3%;    /* consistent inner padding */
+  background: rgba(21, 17, 13, 0.66);
+  height: 52%;               /* same as photo */
   text-align: left;
+  border-top: none;
 }
 
 .card-identity p {
@@ -1043,51 +1037,43 @@ h1 {
 }
 
 .card-identity h3 {
-  margin-bottom: 8%;
+  margin: 0 0 3.5%;
   overflow-wrap: anywhere;
   color: var(--paper);
-  font-size: clamp(28px, 4.2vw, 54px);
-  line-height: 0.9;
+  font-size: clamp(22px, 3.4vw, 46px);
+  line-height: 0.95;
+}
+
+.card-identity-divider {
+  height: 1px;
+  margin-bottom: 4%;
+  background: rgba(255, 212, 59, 0.38);
 }
 
 .card-identity span {
   color: var(--green);
-  font-size: clamp(17px, 2vw, 28px);
+  font-size: clamp(14px, 1.7vw, 24px);
   font-weight: 900;
+  margin-bottom: 3.5%;
 }
-
-.card-identity span::before {
-  content: "@";
-  display: inline-grid;
-  width: 1.35em;
-  height: 1.35em;
-  margin-right: 0.35em;
-  place-items: center;
-  border: 2px solid var(--green);
-  border-radius: 0.35em;
-  font-size: 0.72em;
-  line-height: 1;
-}
-
 .card-location {
-  position: absolute;
-  top: 51.5%;
-  right: 7%;
+  /* lives INSIDE .card-identity via JSX reuse — not a separate absolute block */
   display: grid;
-  width: 42%;
-  gap: 5%;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
 }
 
 .card-data-row {
   min-width: 0;
-  padding: 4% 0 4% 18%;
-  border-top: 1px dotted rgba(255, 212, 59, 0.45);
+  padding: 3.5% 0;
+  border-top: 1px solid rgba(255, 212, 59, 0.28);
 }
 
 .card-location span {
   display: block;
-  color: var(--yellow);
-  font-size: clamp(11px, 1.3vw, 15px);
+  color: rgba(255, 243, 212, 0.62);
+  font-size: clamp(10px, 1.1vw, 14px);
   font-weight: 950;
   text-transform: uppercase;
 }
@@ -1097,21 +1083,21 @@ h1 {
   max-width: 100%;
   overflow-wrap: anywhere;
   color: var(--paper);
-  font-size: clamp(17px, 2vw, 26px);
+  font-size: clamp(15px, 1.8vw, 24px);
   line-height: 1.05;
 }
 
 .card-id-panel {
   position: absolute;
-  left: 6%;
-  right: 6%;
-  bottom: 9%;
+  left: 5.6%;
+  right: 5.6%;
+  bottom: 6%;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(52px, 16%, 82px);
-  gap: 5%;
+  grid-template-columns: minmax(0, 1fr) clamp(48px, 14%, 76px);
+  gap: 4%;
   align-items: center;
-  padding: 3.2% 6%;
-  border: 2px solid rgba(255, 212, 59, 0.54);
+  padding: 2.8% 4.5%;
+  border: 2px solid #d7aa37;
   background: var(--paper-soft);
   color: var(--red-dark);
 }
@@ -1168,7 +1154,14 @@ h1 {
 }
 
 .card-actions {
-  margin-top: 0;
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 4px;
+}
+
+.card-actions .button {
+  flex: 1;
 }
 
 .site-footer {

@@ -38,8 +38,7 @@ const WHISKEY_BOTTLE_SRC = "/assets/whiskey-bottle.svg";
 const DSP_WEBSITE_QR_SRC = "/assets/dsp-website-qr.svg";
 
 function cleanInstagram(value: string) {
-  const trimmed = value.trim();
-  return trimmed.startsWith("@") ? trimmed : `@${trimmed}`;
+  return value.trim();
 }
 
 function makeMembershipId(state: string, district: string) {
@@ -69,8 +68,8 @@ function validateForm(form: FormState, photo: File | null) {
   }
   if (!form.state.trim()) return "Enter your state.";
   if (!form.district.trim()) return "Enter your district.";
-  if (!/^@?[A-Za-z0-9._]{2,30}$/.test(form.instagram.trim())) {
-    return "Enter a valid Instagram handle.";
+  if (!/^@[A-Za-z0-9._]{1,30}$/.test(form.instagram.trim())) {
+    return "Enter a valid Instagram handle starting with @.";
   }
   if (!photo) return "Upload your photo.";
   if (!IMAGE_TYPES.has(photo.type)) return "Upload a JPG, PNG, or WebP photo.";
@@ -268,6 +267,7 @@ export default function JoinExperience() {
       const ctx = canvas.getContext("2d");
       if (!ctx) throw new Error("Could not prepare the card canvas.");
 
+      // ── BACKGROUND ─────────────────────────────────────────────────────
       const gradient = ctx.createLinearGradient(0, 0, 1080, 1350);
       gradient.addColorStop(0, "#83191b");
       gradient.addColorStop(0.52, "#3a0c10");
@@ -275,146 +275,200 @@ export default function JoinExperience() {
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, 1080, 1350);
 
-      const glow = ctx.createRadialGradient(810, 160, 20, 810, 160, 390);
-      glow.addColorStop(0, "rgba(255, 212, 59, 0.46)");
+      const glow = ctx.createRadialGradient(820, 160, 20, 820, 160, 400);
+      glow.addColorStop(0, "rgba(255, 212, 59, 0.44)");
       glow.addColorStop(1, "rgba(255, 212, 59, 0)");
       ctx.fillStyle = glow;
       ctx.fillRect(0, 0, 1080, 1350);
 
-      ctx.fillStyle = "rgba(255, 243, 212, 0.07)";
-      ctx.font = "400 330px Impact, Arial Black, sans-serif";
-      ctx.fillText("DSP", 720, 760);
+      // Watermark
+      ctx.fillStyle = "rgba(255, 243, 212, 0.065)";
+      ctx.font = "400 320px Impact, Arial Black, sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("DSP", 1054, 840);
+      ctx.textAlign = "left";
 
+      // ── BORDERS ────────────────────────────────────────────────────────
       ctx.strokeStyle = "#d7aa37";
       ctx.lineWidth = 5;
       ctx.strokeRect(34, 34, 1012, 1282);
-      ctx.strokeStyle = "rgba(255, 212, 59, 0.54)";
+      ctx.strokeStyle = "rgba(255, 212, 59, 0.5)";
       ctx.lineWidth = 2;
       ctx.strokeRect(52, 52, 976, 1246);
 
-      ctx.fillStyle = "#fff3d4";
-      ctx.font = "900 28px Arial, sans-serif";
+      // ── HEADER ─────────────────────────────────────────────────────────
       ctx.save();
       ctx.beginPath();
-      ctx.arc(100, 68, 46, 0, Math.PI * 2);
+      ctx.arc(108, 76, 46, 0, Math.PI * 2);
       ctx.clip();
-      drawCoverImage(ctx, logo, 54, 22, 92, 92);
+      drawCoverImage(ctx, logo, 62, 30, 92, 92);
       ctx.restore();
       ctx.strokeStyle = "#ffd43b";
       ctx.lineWidth = 5;
       ctx.beginPath();
-      ctx.arc(100, 68, 46, 0, Math.PI * 2);
+      ctx.arc(108, 76, 46, 0, Math.PI * 2);
       ctx.stroke();
-      ctx.fillText("DARU SAMAJ PARTY", 164, 76);
+
+      ctx.fillStyle = "#fff3d4";
+      ctx.font = "900 27px Arial, sans-serif";
+      ctx.fillText("DARU SAMAJ PARTY", 172, 84);
       ctx.fillStyle = "#c8ff43";
       ctx.textAlign = "right";
-      ctx.fillText("FOUNDING MEMBER", 1016, 72);
+      ctx.fillText("FOUNDING MEMBER", 1026, 76);
       ctx.textAlign = "left";
 
-      ctx.strokeStyle = "rgba(255, 212, 59, 0.72)";
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.moveTo(354, 98);
-      ctx.lineTo(1016, 98);
-      ctx.stroke();
-
-      ctx.fillStyle = "#fff3d4";
-      ctx.fillRect(70, 156, 452, 622);
-      drawCoverImage(ctx, image, 86, 172, 420, 590);
-      ctx.strokeStyle = "#d7aa37";
-      ctx.lineWidth = 8;
-      ctx.strokeRect(70, 156, 452, 622);
-      ctx.strokeStyle = "#15110d";
-      ctx.lineWidth = 3;
-      ctx.strokeRect(88, 174, 416, 586);
-
-      ctx.fillStyle = "rgba(21, 17, 13, 0.62)";
-      ctx.fillRect(560, 180, 420, 590);
-      ctx.strokeStyle = "rgba(255, 212, 59, 0.4)";
+      ctx.strokeStyle = "rgba(255, 212, 59, 0.68)";
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(584, 298);
-      ctx.lineTo(956, 298);
-      ctx.moveTo(584, 428);
-      ctx.lineTo(956, 428);
-      ctx.moveTo(584, 556);
-      ctx.lineTo(956, 556);
-      ctx.moveTo(584, 684);
-      ctx.lineTo(956, 684);
+      ctx.moveTo(172, 112);
+      ctx.lineTo(920, 112);
       ctx.stroke();
 
+      // ── LAYOUT CONSTANTS ───────────────────────────────────────────────
+      // CT = content top, CH = content height, shared by photo AND info panel
+      const CT = 136;  // content top Y
+      const CH = 700;  // content height (same for both columns)
+      const PW = 440;  // photo frame width
+      const GAP = 20;  // gap between columns
+      const IX = 60 + PW + GAP;        // info panel left X  = 520
+      const IW = 1080 - 60 - IX;       // info panel width   = 500
+      const IPX = IX + 32;              // info text left X   = 552
+      const IPR = IX + IW - 32;        // info text right X  = 988
+
+      // ── PHOTO ──────────────────────────────────────────────────────────
       ctx.fillStyle = "#fff3d4";
-      const nameSize = fitText(
-        ctx,
-        previewMember.name.toUpperCase(),
-        372,
-        52,
-        "Impact, Arial Black, sans-serif",
-        "400",
-        24,
-      );
+      ctx.fillRect(60, CT, PW, CH);
+      drawCoverImage(ctx, image, 76, CT + 16, PW - 32, CH - 32);
+      ctx.strokeStyle = "#d7aa37";
+      ctx.lineWidth = 8;
+      ctx.strokeRect(60, CT, PW, CH);
+      ctx.strokeStyle = "#15110d";
+      ctx.lineWidth = 3;
+      ctx.strokeRect(76, CT + 16, PW - 32, CH - 32);
+
+      // ── INFO PANEL ─────────────────────────────────────────────────────
+      ctx.fillStyle = "rgba(21, 17, 13, 0.66)";
+      ctx.fillRect(IX, CT, IW, CH);
+
+      // Helper: gold divider within info panel
+      const drawDiv = (y: number) => {
+        ctx.strokeStyle = "rgba(255, 212, 59, 0.38)";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(IPX, y);
+        ctx.lineTo(IPR, y);
+        ctx.stroke();
+      };
+
+      // Name  (row top: CT+28)
+      const nameSize = fitText(ctx, previewMember.name.toUpperCase(), IW - 64, 58, "Impact, Arial Black, sans-serif", "400", 22);
+      ctx.fillStyle = "#fff3d4";
       ctx.font = `400 ${nameSize}px Impact, Arial Black, sans-serif`;
-      ctx.fillText(previewMember.name.toUpperCase(), 584, 260);
-      const handleSize = fitText(
-        ctx,
-        previewMember.instagram.toUpperCase(),
-        348,
-        46,
-        "Impact, Arial Black, sans-serif",
-        "400",
-        28,
-      );
+      ctx.fillText(previewMember.name.toUpperCase(), IPX, CT + 76);
+      drawDiv(CT + 106);
+
+      // Instagram handle  (row top: CT+106)
+      const handleSize = fitText(ctx, previewMember.instagram.toUpperCase(), IW - 64, 46, "Impact, Arial Black, sans-serif", "400", 26);
       ctx.fillStyle = "#c8ff43";
       ctx.font = `400 ${handleSize}px Impact, Arial Black, sans-serif`;
-      ctx.fillText(previewMember.instagram.toUpperCase(), 650, 376);
+      ctx.fillText(previewMember.instagram.toUpperCase(), IPX, CT + 180);
+      drawDiv(CT + 210);
 
-      ctx.fillStyle = "rgba(255, 243, 212, 0.68)";
-      ctx.font = "900 24px Arial, sans-serif";
-      ctx.fillText("STATE", 650, 492);
-      ctx.fillText("DISTRICT", 650, 620);
-
+      // State  (row top: CT+210)
+      ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
+      ctx.font = "900 21px Arial, sans-serif";
+      ctx.fillText("STATE", IPX, CT + 266);
+      const stateSize = fitText(ctx, previewMember.state.toUpperCase(), IW - 64, 48, "Arial, sans-serif", "900", 22);
       ctx.fillStyle = "#fff3d4";
-      const stateSize = fitText(ctx, previewMember.state.toUpperCase(), 300, 42, "Arial, sans-serif", "900");
       ctx.font = `900 ${stateSize}px Arial, sans-serif`;
-      ctx.fillText(previewMember.state.toUpperCase(), 650, 536);
-      const districtSize = fitText(ctx, previewMember.district.toUpperCase(), 300, 42, "Arial, sans-serif", "900");
-      ctx.font = `900 ${districtSize}px Arial, sans-serif`;
-      ctx.fillText(previewMember.district.toUpperCase(), 650, 664);
+      ctx.fillText(previewMember.state.toUpperCase(), IPX, CT + 322);
+      drawDiv(CT + 356);
 
+      // District  (row top: CT+356)
+      ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
+      ctx.font = "900 21px Arial, sans-serif";
+      ctx.fillText("DISTRICT", IPX, CT + 410);
+      const districtSize = fitText(ctx, previewMember.district.toUpperCase(), IW - 64, 48, "Arial, sans-serif", "900", 22);
+      ctx.fillStyle = "#fff3d4";
+      ctx.font = `900 ${districtSize}px Arial, sans-serif`;
+      ctx.fillText(previewMember.district.toUpperCase(), IPX, CT + 466);
+      drawDiv(CT + 500);
+
+      // Status  (row top: CT+500)
+      ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
+      ctx.font = "900 21px Arial, sans-serif";
+      ctx.fillText("STATUS", IPX, CT + 556);
+      ctx.fillStyle = "#c8ff43";
+      ctx.font = "900 42px Arial, sans-serif";
+      ctx.fillText("ACTIVE", IPX, CT + 612);
+
+      // ── WHISKEY BOTTLE (drawn on top of info panel) ─────────────────────
       ctx.save();
-      ctx.globalAlpha = 0.92;
-      ctx.translate(930, 118);
+      ctx.globalAlpha = 0.9;
+      ctx.translate(IX + IW - 52, CT + 110);
       ctx.rotate(0.08);
-      ctx.drawImage(bottle, -24, -24, 54, 152);
+      ctx.drawImage(bottle, -26, -26, 52, 148);
       ctx.restore();
 
-      ctx.fillStyle = "#fff3d4";
-      ctx.fillRect(64, 846, 952, 250);
-      ctx.strokeStyle = "#d7aa37";
-      ctx.lineWidth = 5;
-      ctx.strokeRect(84, 866, 560, 134);
-      ctx.fillStyle = "#7b1719";
-      ctx.fillRect(112, 902, 504, 70);
-      ctx.fillStyle = "#ffd43b";
-      const idSize = fitText(ctx, previewMember.membershipId, 468, 48, "Impact, Arial Black, sans-serif", "400");
-      ctx.font = `400 ${idSize}px Impact, Arial Black, sans-serif`;
-      ctx.textAlign = "center";
-      ctx.fillText(previewMember.membershipId, 364, 954);
-      ctx.fillStyle = "#7b1719";
-      ctx.font = "900 22px Arial, sans-serif";
-      ctx.fillText("MEMBERSHIP ID", 364, 892);
+      // ── MEMBERSHIP ID PANEL ────────────────────────────────────────────
+      // Sits flush below both columns, with consistent side margins
+      const IDY = CT + CH + 22;   // = 858
+      const IDH = 184;
+      const QRS = 150;
+      const QRX = 1080 - 60 - QRS - 14;  // = 856
+      const QRY = IDY + (IDH - QRS) / 2; // vertically centred = 875
 
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(738, 880, 160, 160);
-      ctx.drawImage(websiteQr, 748, 890, 140, 140);
+      ctx.fillStyle = "#fff3d4";
+      ctx.fillRect(60, IDY, 960, IDH);
       ctx.strokeStyle = "#d7aa37";
       ctx.lineWidth = 5;
-      ctx.strokeRect(738, 880, 160, 160);
+      ctx.strokeRect(60, IDY, 960, IDH);
+
+      // Left portion: label + red value box
+      // Centre X of the left area (between panel left and QR left edge)
+      const idCX = Math.round((60 + QRX) / 2);
+
       ctx.fillStyle = "#7b1719";
-      ctx.fillRect(66, 1134, 948, 96);
-      ctx.fillStyle = "#c8ff43";
-      ctx.font = "900 26px Arial, sans-serif";
-      ctx.fillText("1080 x 1350 JPG", 540, 1194);
+      ctx.font = "900 20px Arial, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("MEMBERSHIP ID", idCX, IDY + 36);
+
+      // Red box — centred in the left portion
+      const idBoxW = QRX - 92;    // leaves 16px gap before QR
+      ctx.fillStyle = "#7b1719";
+      ctx.fillRect(76, IDY + 50, idBoxW, 80);
+
+      const idSize = fitText(ctx, previewMember.membershipId, idBoxW - 20, 52, "Impact, Arial Black, sans-serif", "400");
+      ctx.fillStyle = "#ffd43b";
+      ctx.font = `400 ${idSize}px Impact, Arial Black, sans-serif`;
+      ctx.fillText(previewMember.membershipId, idCX, IDY + 108);
+      ctx.textAlign = "left";
+
+      // QR code — right of panel, vertically centred
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(QRX, QRY, QRS, QRS);
+      ctx.drawImage(websiteQr, QRX + 6, QRY + 6, QRS - 12, QRS - 12);
+      ctx.strokeStyle = "#d7aa37";
+      ctx.lineWidth = 5;
+      ctx.strokeRect(QRX, QRY, QRS, QRS);
+
+      // ── FOOTER ─────────────────────────────────────────────────────────
+      const FDY = IDY + IDH + 28;   // = 1070
+
+      ctx.strokeStyle = "rgba(255, 212, 59, 0.66)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(84, FDY);
+      ctx.lineTo(996, FDY);
+      ctx.stroke();
+
+      ctx.fillStyle = "rgba(255, 243, 212, 0.5)";
+      ctx.font = "700 22px Arial, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("darusamajparty.info", 540, FDY + 48);
+      ctx.fillStyle = "rgba(200, 255, 67, 0.68)";
+      ctx.font = "900 20px Arial, sans-serif";
+      ctx.fillText("#DARUSAMAJPARTY", 540, FDY + 88);
       ctx.textAlign = "left";
 
       const dataUrl = canvas.toDataURL("image/jpeg", 0.96);
@@ -565,22 +619,22 @@ export default function JoinExperience() {
                 )}
               </div>
               <div className="card-identity">
-                <p>{previewMember.membershipId}</p>
                 <h3>{previewMember.name}</h3>
+                <div className="card-identity-divider" aria-hidden="true" />
                 <span>{previewMember.instagram}</span>
-              </div>
-              <div className="card-location">
-                <div className="card-data-row">
-                  <span>State</span>
-                  <strong>{previewMember.state}</strong>
-                </div>
-                <div className="card-data-row">
-                  <span>District</span>
-                  <strong>{previewMember.district}</strong>
-                </div>
-                <div className="card-data-row">
-                  <span>Status</span>
-                  <strong>Active</strong>
+                <div className="card-location">
+                  <div className="card-data-row">
+                    <span>State</span>
+                    <strong>{previewMember.state}</strong>
+                  </div>
+                  <div className="card-data-row">
+                    <span>District</span>
+                    <strong>{previewMember.district}</strong>
+                  </div>
+                  <div className="card-data-row">
+                    <span>Status</span>
+                    <strong style={{ color: "var(--green)" }}>Active</strong>
+                  </div>
                 </div>
               </div>
               <div className="card-id-panel">
@@ -590,7 +644,7 @@ export default function JoinExperience() {
                 </div>
                 <a
                   className="card-qr-mark"
-                  href="https://darusamajparty.online"
+                  href="https://darusamajparty.info"
                   aria-label="Open Daru Samaj Party website"
                   target="_blank"
                   rel="noreferrer"
