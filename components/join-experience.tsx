@@ -347,11 +347,11 @@ export default function JoinExperience() {
       const nameSize = fitText(
         ctx,
         previewMember.name.toUpperCase(),
-        392,
-        72,
+        372,
+        52,
         "Impact, Arial Black, sans-serif",
         "400",
-        28,
+        24,
       );
       ctx.font = `400 ${nameSize}px Impact, Arial Black, sans-serif`;
       ctx.fillText(previewMember.name.toUpperCase(), 584, 260);

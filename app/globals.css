@@ -142,6 +142,10 @@ img {
   backdrop-filter: blur(16px);
 }
 
+.site-header-inner {
+  display: contents;
+}
+
 .brand {
   display: flex;
   align-items: center;
@@ -253,6 +257,13 @@ img {
     linear-gradient(120deg, rgba(123, 23, 25, 0.98), rgba(49, 10, 13, 0.98) 58%, rgba(21, 17, 13, 0.96)),
     var(--red);
   color: var(--paper);
+}
+
+.hero-inner {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  display: contents;
 }
 
 .hero-copy {
@@ -425,6 +436,12 @@ h1 {
   padding: clamp(64px, 9vw, 122px) clamp(18px, 5vw, 72px);
 }
 
+.section-content {
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
 .section-label {
   width: fit-content;
   margin-bottom: 20px;
@@ -549,7 +566,7 @@ h1 {
 .about-closing {
   grid-area: closing;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(18px, 4vw, 42px);
   align-items: end;
   margin-top: 4px;
@@ -558,8 +575,11 @@ h1 {
 }
 
 .about-closing strong {
+  grid-column: 1 / -1;
+}
+
+.about-closing strong {
   display: block;
-  min-width: 220px;
   border: 3px solid var(--ink);
   padding: 18px;
   background: var(--green);
@@ -775,9 +795,10 @@ h1 {
 
 .join-layout {
   display: grid;
-  grid-template-columns: minmax(320px, 0.92fr) minmax(320px, 0.78fr);
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 0.85fr);
   gap: clamp(28px, 5vw, 70px);
   align-items: start;
+  max-width: 1360px;
 }
 
 .member-form {
@@ -1207,6 +1228,10 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .about-closing strong {
+    grid-column: 1;
+  }
+
   .hero-card {
     width: min(100%, 420px);
   }
@@ -1331,15 +1356,7 @@ h1 {
     flex-direction: column;
     transform: translateY(-50%);
   }
-}
 
-@media (min-width: 1180px) {
-  .header-email {
-    display: inline-flex;
-  }
-}
-
-@media (min-width: 1041px) {
   .hero-section {
     grid-template-columns: minmax(0, 1fr) minmax(320px, 0.58fr);
     gap: clamp(28px, 5vw, 72px);
@@ -1359,6 +1376,139 @@ h1 {
   .hero-card {
     width: min(100%, 520px);
     transform: rotate(1.5deg);
+  }
+
+  /* Manifesto: 3-column at mid-desktop for a tighter bento feel */
+  .manifesto-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  /* Keep the span-3 items from the :nth-child rules */
+  .manifesto-item {
+    grid-column: span 2;
+  }
+
+  .manifesto-item:nth-child(2),
+  .manifesto-item:nth-child(5),
+  .manifesto-item:nth-child(9) {
+    grid-column: span 3;
+  }
+
+  /* About-closing: restore 3-column at desktop */
+  .about-closing {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .about-closing strong {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1180px) {
+  .header-email {
+    display: inline-flex;
+  }
+}
+
+/* ─── Wide desktop: cap content width and refine layout ─── */
+@media (min-width: 1280px) {
+  .site-header {
+    padding: 16px clamp(32px, 4vw, 80px);
+  }
+
+  .site-header nav {
+    gap: 36px;
+    font-size: 13px;
+  }
+
+  .site-header nav a {
+    position: relative;
+    padding-bottom: 3px;
+  }
+
+  .site-header nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
+  }
+
+  .site-header nav a:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Constrain all sections to a max reading width */
+  .section,
+  .join-section,
+  .vision-band {
+    padding-left: clamp(32px, 6vw, 120px);
+    padding-right: clamp(32px, 6vw, 120px);
+  }
+
+  .hero-section {
+    padding-left: clamp(32px, 6vw, 120px);
+    padding-right: clamp(32px, 6vw, 120px);
+  }
+
+  /* Hero: tighten card proportions so it doesn't balloon */
+  .hero-card {
+    max-width: 460px;
+  }
+
+  /* About closing gets full 3-col treatment */
+  .about-closing {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+
+  .about-closing strong {
+    grid-column: auto;
+    min-width: 240px;
+  }
+
+  /* Manifesto slogan: horizontal at wide screens */
+  .manifesto-slogan {
+    grid-template-columns: 0.18fr 1fr 0.32fr;
+  }
+
+  /* Social dock: push it a bit further from edge so it doesn't feel cramped */
+  .social-dock {
+    right: 24px;
+  }
+
+  /* Join: constrain the max combined width */
+  .join-layout {
+    max-width: 1280px;
+  }
+}
+
+/* ─── Ultra-wide: global max-width cap ─── */
+@media (min-width: 1600px) {
+  .hero-section {
+    padding-left: max(120px, calc((100vw - 1480px) / 2));
+    padding-right: max(120px, calc((100vw - 1480px) / 2));
+  }
+
+  .section,
+  .join-section,
+  .vision-band {
+    padding-left: max(120px, calc((100vw - 1480px) / 2));
+    padding-right: max(120px, calc((100vw - 1480px) / 2));
+  }
+
+  .site-header {
+    padding-left: max(80px, calc((100vw - 1480px) / 2));
+    padding-right: max(80px, calc((100vw - 1480px) / 2));
+  }
+
+  /* Ticker stays full-bleed but text is contained */
+  h1 {
+    font-size: 164px;
   }
 }
 
