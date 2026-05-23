@@ -1,0 +1,66 @@
+{
+  "navigation": {
+    "brandKicker": "سرکاری تحریک",
+    "about": "تعارف",
+    "manifesto": "منشور",
+    "vision": "نظریہ",
+    "join": "شامل ہوں",
+    "language": "زبان"
+  },
+  "hero": {
+    "body": "ACPs(Alcohol Consuming Persons) کی آواز، احترام کی لڑائی۔ شرمندگی نہیں، امتیاز نہیں: ذمہ دار پینے والوں کو حقوق، حفاظت اور سہولت ملنی چاہیے۔",
+    "primaryCta": "پارٹی میں شامل ہوں",
+    "secondaryCta": "منشور پڑھیں",
+    "captionTitle": "بانی رکنیت مہم"
+  },
+  "about": {
+    "sectionLabel": "Daru Samaj Party کے بارے میں",
+    "title": "ذمہ دار پینے والے عزت، حفاظت اور سماجی احترام کے حق دار ہیں۔",
+    "beliefLineOne": "پینا جرم نہیں ہے۔",
+    "beliefLineTwo": "مسئلہ غیر ذمہ داری ہے۔"
+  },
+  "manifesto": {
+    "sectionLabel": "Daru Samaj Party کا منشور",
+    "title": "عزت۔ حفاظت۔ ذمہ داری۔ آزادی۔"
+  },
+  "join": {
+    "sectionLabel": "شامل ہوں",
+    "title": "بانی رکن بنیں اور اپنا Instagram-ready کارڈ حاصل کریں۔",
+    "form": {
+      "name": "نام",
+      "email": "ای میل",
+      "phone": "فون",
+      "instagram": "Instagram ہینڈل",
+      "state": "ریاست",
+      "district": "ضلع",
+      "photo": "تصویر",
+      "submit": "رکنیت کارڈ بنائیں",
+      "download": "JPG ڈاؤن لوڈ"
+    },
+    "card": {
+      "foundingMember": "بانی رکن",
+      "uploadPhoto": "تصویر اپ لوڈ کریں",
+      "state": "ریاست",
+      "district": "ضلع",
+      "status": "حیثیت",
+      "active": "فعال",
+      "membershipId": "رکنیت ID"
+    }
+  },
+  "footer": {
+    "terms": "شرائط و ضوابط",
+    "privacy": "رازداری پالیسی",
+    "join": "رکن بنیں"
+  },
+  "legal": {
+    "back": "ہوم پر واپس",
+    "terms": {
+      "sectionLabel": "شرائط و ضوابط",
+      "title": "ویب سائٹ شرائط"
+    },
+    "privacy": {
+      "sectionLabel": "رازداری پالیسی",
+      "title": "رازداری پالیسی"
+    }
+  }
+}

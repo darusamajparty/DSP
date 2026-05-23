@@ -1,0 +1,72 @@
+{
+  "navigation": {
+    "brandKicker": "અધિકૃત આંદોલન",
+    "about": "વિશે",
+    "manifesto": "ઘોષણાપત્ર",
+    "vision": "દ્રષ્ટિ",
+    "join": "જોડાઓ",
+    "language": "ભાષા"
+  },
+  "hero": {
+    "body": "ACPs(Alcohol Consuming Persons) નો અવાજ, સન્માન માટેની લડત. શરમ નહીં, ભેદભાવ નહીં: જવાબદાર પીણારાઓને અધિકાર, સુરક્ષા અને સુવિધા મળવી જોઈએ.",
+    "primaryCta": "પાર્ટીમાં જોડાઓ",
+    "secondaryCta": "ઘોષણાપત્ર વાંચો",
+    "captionTitle": "સ્થાપક સભ્યતા અભિયાન",
+    "captionBody": "જોડાઓ, તમારું કાર્ડ બનાવો અને આંદોલન શેર કરો."
+  },
+  "about": {
+    "sectionLabel": "Daru Samaj Party વિશે",
+    "title": "જવાબદાર પીણારાઓ સન્માન, સુરક્ષા અને સામાજિક આદરને પાત્ર છે.",
+    "lead": "Daru Samaj Party એક સરળ વિચાર પર બનેલું સમુદાય આંદોલન છે: જવાબદારીથી પીતા વયસ્કો સાથે વયસ્કો જેવો વ્યવહાર થવો જોઈએ.",
+    "beliefLineOne": "પીવું ગુનો નથી.",
+    "beliefLineTwo": "સમस्या બેજવાબદારી છે."
+  },
+  "manifesto": {
+    "sectionLabel": "Daru Samaj Party નું ઘોષણાપત્ર",
+    "title": "સન્માન. સુરક્ષા. જવાબદારી. સ્વતંત્રતા."
+  },
+  "vision": {
+    "sectionLabel": "દ્રષ્ટિ",
+    "title": "જ્યાં જવાબદાર વયસ્કો સાથે સન્માનથી વર્તન થાય તેવો સમાજ."
+  },
+  "join": {
+    "sectionLabel": "જોડાઓ",
+    "title": "સ્થાપક સભ્ય બનો અને તમારું Instagram-ready કાર્ડ મેળવો.",
+    "form": {
+      "name": "નામ",
+      "email": "ઈમેલ",
+      "phone": "ફોન",
+      "instagram": "Instagram હેન્ડલ",
+      "state": "રાજ્ય",
+      "district": "જિલ્લો",
+      "photo": "ફોટો",
+      "submit": "સભ્યતા કાર્ડ બનાવો",
+      "download": "JPG ડાઉનલોડ કરો"
+    },
+    "card": {
+      "foundingMember": "સ્થાપક સભ્ય",
+      "uploadPhoto": "ફોટો અપલોડ કરો",
+      "state": "રાજ્ય",
+      "district": "જિલ્લો",
+      "status": "સ્થિતિ",
+      "active": "સક્રિય",
+      "membershipId": "સભ્યતા ID"
+    }
+  },
+  "footer": {
+    "terms": "નિયમો અને શરતો",
+    "privacy": "ગોપનીયતા નીતિ",
+    "join": "સભ્ય બનો"
+  },
+  "legal": {
+    "back": "હોમ પર પાછા",
+    "terms": {
+      "sectionLabel": "નિયમો અને શરતો",
+      "title": "વેબસાઇટ નિયમો"
+    },
+    "privacy": {
+      "sectionLabel": "ગોપનીયતા નીતિ",
+      "title": "ગોપનીયતા નીતિ"
+    }
+  }
+}

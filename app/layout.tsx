@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://darusamajparty.online";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -16,7 +18,7 @@ const bebas = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://darusamajparty.online"),
+  metadataBase: new URL(siteUrl),
   title: "Daru Samaj Party | Join The Movement",
   description:
     "Join Daru Samaj Party, a community movement standing for the dignity and rights of responsible adult drinkers. Get your Instagram-ready membership card.",

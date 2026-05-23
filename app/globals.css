@@ -214,6 +214,30 @@ img {
   gap: 12px;
 }
 
+.language-switcher {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid rgba(21, 17, 13, 0.28);
+  padding: 0 8px;
+  background: var(--paper-soft);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.language-switcher select {
+  min-height: 30px;
+  max-width: 126px;
+  border: 0;
+  background: transparent;
+  color: var(--red);
+  font: inherit;
+  cursor: pointer;
+}
+
 .header-email {
   display: none;
   max-width: 240px;
@@ -1257,8 +1281,13 @@ h1 {
   font-weight: 850;
 }
 
+.site-footer > * {
+  min-width: 0;
+}
+
 .site-footer span {
   color: rgba(255, 243, 212, 0.7);
+  line-height: 1.45;
 }
 
 .site-footer a {
@@ -1294,11 +1323,19 @@ h1 {
 
 .legal-back-link {
   display: inline-flex;
-  margin-bottom: 28px;
   color: var(--green);
   font-size: 13px;
   font-weight: 950;
   text-transform: uppercase;
+}
+
+.legal-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
 }
 
 .legal-hero h1 {
@@ -1451,6 +1488,27 @@ h1 {
 
   .site-footer {
     grid-template-columns: 1fr;
+    gap: 12px;
+    padding-block: 24px 88px;
+    text-align: left;
+  }
+
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    justify-content: stretch;
+    border-top: 1px solid rgba(255, 243, 212, 0.2);
+  }
+
+  .footer-links a {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    border-bottom: 1px solid rgba(255, 243, 212, 0.16);
+    padding: 12px 0;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
   }
 }
 

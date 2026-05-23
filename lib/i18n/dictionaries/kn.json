@@ -1,0 +1,66 @@
+{
+  "navigation": {
+    "brandKicker": "ಅಧಿಕೃತ ಚಳವಳಿ",
+    "about": "ಪರಿಚಯ",
+    "manifesto": "ಘೋಷಣಾಪತ್ರ",
+    "vision": "ದೃಷ್ಟಿ",
+    "join": "ಸೇರಿರಿ",
+    "language": "ಭಾಷೆ"
+  },
+  "hero": {
+    "body": "ACPs(Alcohol Consuming Persons) ಅವರ ಧ್ವನಿ, ಗೌರವಕ್ಕಾಗಿ ಹೋರಾಟ. ನಾಚಿಕೆ ಇಲ್ಲ, ಭೇದಭಾವ ಇಲ್ಲ: ಜವಾಬ್ದಾರಿಯಾಗಿ ಕುಡಿಯುವವರಿಗೆ ಹಕ್ಕು, ಸುರಕ್ಷತೆ ಮತ್ತು ಸೌಲಭ್ಯ ಬೇಕು.",
+    "primaryCta": "ಪಾರ್ಟಿಗೆ ಸೇರಿರಿ",
+    "secondaryCta": "ಘೋಷಣಾಪತ್ರ ಓದಿ",
+    "captionTitle": "ಸ್ಥಾಪಕ ಸದಸ್ಯತ್ವ ಅಭಿಯಾನ"
+  },
+  "about": {
+    "sectionLabel": "Daru Samaj Party ಬಗ್ಗೆ",
+    "title": "ಜವಾಬ್ದಾರಿಯಾಗಿ ಕುಡಿಯುವವರು ಗೌರವ, ಸುರಕ್ಷತೆ ಮತ್ತು ಸಾಮಾಜಿಕ ಮಾನ್ಯತೆಗೆ ಅರ್ಹರು.",
+    "beliefLineOne": "ಕುಡಿಯುವುದು ಅಪರಾಧವಲ್ಲ.",
+    "beliefLineTwo": "ಸಮಸ್ಯೆ ಜವಾಬ್ದಾರಿಯಿಲ್ಲದ ವರ್ತನೆ."
+  },
+  "manifesto": {
+    "sectionLabel": "Daru Samaj Party ಘೋಷಣಾಪತ್ರ",
+    "title": "ಗೌರವ. ಸುರಕ್ಷತೆ. ಜವಾಬ್ದಾರಿ. ಸ್ವಾತಂತ್ರ್ಯ."
+  },
+  "join": {
+    "sectionLabel": "ಸೇರಿರಿ",
+    "title": "ಸ್ಥಾಪಕ ಸದಸ್ಯರಾಗಿ ನಿಮ್ಮ Instagram-ready ಕಾರ್ಡ್ ಪಡೆಯಿರಿ.",
+    "form": {
+      "name": "ಹೆಸರು",
+      "email": "ಇಮೇಲ್",
+      "phone": "ಫೋನ್",
+      "instagram": "Instagram ಹ್ಯಾಂಡಲ್",
+      "state": "ರಾಜ್ಯ",
+      "district": "ಜಿಲ್ಲೆ",
+      "photo": "ಫೋಟೋ",
+      "submit": "ಸದಸ್ಯತ್ವ ಕಾರ್ಡ್ ರಚಿಸಿ",
+      "download": "JPG ಡೌನ್‌ಲೋಡ್"
+    },
+    "card": {
+      "foundingMember": "ಸ್ಥಾಪಕ ಸದಸ್ಯ",
+      "uploadPhoto": "ಫೋಟೋ ಅಪ್‌ಲೋಡ್",
+      "state": "ರಾಜ್ಯ",
+      "district": "ಜಿಲ್ಲೆ",
+      "status": "ಸ್ಥಿತಿ",
+      "active": "ಸಕ್ರಿಯ",
+      "membershipId": "ಸದಸ್ಯತ್ವ ID"
+    }
+  },
+  "footer": {
+    "terms": "ನಿಯಮಗಳು",
+    "privacy": "ಗೌಪ್ಯತಾ ನೀತಿ",
+    "join": "ಸದಸ್ಯರಾಗಿ"
+  },
+  "legal": {
+    "back": "ಮುಖಪುಟಕ್ಕೆ ಹಿಂತಿರುಗಿ",
+    "terms": {
+      "sectionLabel": "ನಿಯಮಗಳು",
+      "title": "ವೆಬ್‌ಸೈಟ್ ನಿಯಮಗಳು"
+    },
+    "privacy": {
+      "sectionLabel": "ಗೌಪ್ಯತಾ ನೀತಿ",
+      "title": "ಗೌಪ್ಯತಾ ನೀತಿ"
+    }
+  }
+}

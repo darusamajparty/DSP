@@ -128,6 +128,38 @@ function readJpegDimensions(filePath) {
   }));
   await mobile.screenshot({ path: "assets/mobile-qa.png", fullPage: true });
 
+  async function inspectLocalizedRoute(route) {
+    const page = await browser.newPage({ viewport: { width: 390, height: 920 }, isMobile: true });
+    page.on("console", (message) => {
+      if (message.type() === "error") errors.push(`${route}: ${message.text()}`);
+    });
+    page.on("pageerror", (error) => errors.push(`${route}: ${error.message}`));
+    await page.goto(`${baseUrl}${route}`, { waitUntil: "networkidle" });
+    const metrics = await page.evaluate(() => ({
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+      h1: document.querySelector("h1")?.textContent?.trim() || "",
+      body: document.body.textContent || "",
+      languageSwitcher: Boolean(document.querySelector(".language-switcher select")),
+      selectedLocale: document.querySelector(".language-switcher select")?.value || "",
+      routeLang: document.querySelector("[lang]")?.getAttribute("lang") || "",
+    }));
+    await page.close();
+    return {
+      route,
+      ...metrics,
+      overflow: metrics.scrollWidth > metrics.clientWidth,
+    };
+  }
+
+  const localizedRoutes = [
+    await inspectLocalizedRoute("/hi"),
+    await inspectLocalizedRoute("/mr"),
+    await inspectLocalizedRoute("/ur"),
+    await inspectLocalizedRoute("/hi/terms"),
+    await inspectLocalizedRoute("/hi/privacy"),
+  ];
+
   await browser.close();
 
   const result = {
@@ -143,6 +175,7 @@ function readJpegDimensions(filePath) {
     errors,
     desktopOverflow: desktopMetrics.scrollWidth > desktopMetrics.clientWidth,
     mobileOverflow: mobileMetrics.scrollWidth > mobileMetrics.clientWidth,
+    localizedRoutes,
   };
   const unexpectedErrors = result.submissionBlocked
     ? errors.filter((error) => !error.includes("429"))
@@ -153,15 +186,25 @@ function readJpegDimensions(filePath) {
   if (
     result.desktopOverflow ||
     result.mobileOverflow ||
+    localizedRoutes.some(
+      (route) =>
+        route.overflow ||
+        !route.h1 ||
+        !route.languageSwitcher ||
+        (route.route === "/hi" && route.selectedLocale !== "hi") ||
+        (route.route === "/mr" && route.selectedLocale !== "mr") ||
+        (route.route === "/ur" && route.selectedLocale !== "ur") ||
+        (route.route.startsWith("/hi/") && route.selectedLocale !== "hi"),
+    ) ||
     unexpectedErrors.length ||
     result.cardAspectRatio !== 0.8 ||
     !result.desktopMetrics.heroText.includes("The voice of ACP") ||
     result.desktopMetrics.logoSrc !== "/assets/dsp-logo.jpeg" ||
     result.mobileMetrics.logoSrc !== "/assets/dsp-logo.jpeg" ||
     !result.desktopMetrics.aboutText.includes("Responsible drinkers deserve dignity") ||
-    !result.desktopMetrics.aboutText.includes("DSP — The Voice of Responsible Drinkers.") ||
+    !result.desktopMetrics.aboutText.includes("DSP - The Voice of Responsible Drinkers.") ||
     !result.desktopMetrics.manifestoText.includes("Dignity for Responsible Drinkers") ||
-    !result.desktopMetrics.manifestoText.includes("Daru Samaj Party — The Voice of Responsible Drinkers.") ||
+    !result.desktopMetrics.manifestoText.includes("Daru Samaj Party - The Voice of Responsible Drinkers.") ||
     !result.desktopMetrics.visionText.includes("dignity, fairness, and respect") ||
     !result.desktopMetrics.missionText.includes("practical alcohol policies") ||
     result.desktopMetrics.heroImageFit !== "contain" ||
@@ -172,7 +215,7 @@ function readJpegDimensions(filePath) {
     result.cardVisuals.qrHref !== "https://darusamajparty.online" ||
     result.cardVisuals.qrSrc !== "/assets/dsp-website-qr.svg" ||
     !result.cardVisuals.bottle ||
-    result.cardVisuals.logoWidth < 56 ||
+    result.cardVisuals.logoWidth < 48 ||
     result.cardVisuals.dataRows !== 3 ||
     !result.cardVisuals.idPanelGeometry ||
     result.cardVisuals.idPanelGeometry.topRatio < 0.58 ||

@@ -1,0 +1,260 @@
+{
+  "meta": {
+    "title": "Daru Samaj Party | Join The Movement",
+    "description": "Join Daru Samaj Party, a community movement standing for the dignity and rights of responsible adult drinkers. Get your Instagram-ready membership card.",
+    "ogDescription": "Join Daru Samaj Party - a community movement standing for the dignity and rights of responsible adult drinkers. Get your official membership card.",
+    "imageAlt": "Daru Samaj Party - The Voice of Responsible Drinkers"
+  },
+  "navigation": {
+    "brandKicker": "Official Movement",
+    "brandName": "Daru Samaj Party",
+    "about": "About",
+    "manifesto": "Manifesto",
+    "vision": "Vision",
+    "join": "Join",
+    "language": "Language"
+  },
+  "social": {
+    "openLabel": "Open Daru Samaj Party on"
+  },
+  "hero": {
+    "title": "Daru Samaj Party (DSP)",
+    "body": "The voice of ACPs(Alcohol Consuming Persons), the fight for respect. No shame, no discrimination: responsible drinkers deserve rights, safety, and convenience.",
+    "primaryCta": "Join The Party",
+    "secondaryCta": "Read Manifesto",
+    "artworkAlt": "Daru Samaj Party campaign poster",
+    "captionTitle": "Founding membership drive",
+    "captionBody": "Join, generate your card, and post the movement."
+  },
+  "ticker": [
+    "Join form live",
+    "Instagram-ready membership card",
+    "State and district chapters",
+    "Responsible community movement"
+  ],
+  "about": {
+    "sectionLabel": "About Daru Samaj Party",
+    "title": "Responsible drinkers deserve dignity, safety, and basic social respect.",
+    "lead": "Daru Samaj Party is a community movement built around one simple idea: adults who drink responsibly should be treated like adults.",
+    "whyTitle": "Why DSP exists",
+    "whyBody": "For too long, people who drink responsibly have been treated with unnecessary judgement, moral policing, and social hypocrisy. The same society that benefits from alcohol taxes, hospitality jobs, nightlife revenue, and local business activity often refuses to acknowledge the people who contribute to that ecosystem.",
+    "standsTitle": "What DSP stands for",
+    "standsBody": "We do not promote irresponsible drinking. We stand for responsible choice, safe behaviour, fair treatment, and practical reforms, from peaceful Friday nights and safer alternatives to drunk driving to home delivery with age verification and freedom from unnecessary harassment.",
+    "beliefLineOne": "Drinking is not a crime.",
+    "beliefLineTwo": "Irresponsibility is the problem.",
+    "closingOne": "DSP speaks for the common person who works hard all week, pays taxes, supports local businesses, and simply wants to enjoy personal time without shame, drama, or interrogation.",
+    "closingTwo": "Daru Samaj Party stands for a society where responsible drinkers are not mocked, harassed, or treated as second-class citizens, but are recognised as people with rights, choices, and dignity.",
+    "closingStrong": "DSP - The Voice of Responsible Drinkers."
+  },
+  "manifesto": {
+    "sectionLabel": "Manifesto of Daru Samaj Party",
+    "title": "Dignity. Safety. Responsibility. Freedom.",
+    "intro": "A humorous movement with a serious demand: treat responsible adults fairly, regulate with evidence, and stop confusing personal choice with public disorder.",
+    "items": [
+      {
+        "title": "Dignity for Responsible Drinkers",
+        "body": "Responsible adult drinkers deserve dignity, not shame. Drinking responsibly is a personal choice, not a character certificate."
+      },
+      {
+        "title": "Alcohol Is Not the Root of All Evil",
+        "body": "Violence, addiction, unsafe behaviour, poverty, unemployment, and family conflict are serious issues, but blaming alcohol for everything hides the real causes."
+      },
+      {
+        "title": "Voice Against Unnecessary Alcohol Bans",
+        "body": "DSP stands against sudden, impractical bans that create black markets, unsafe illegal liquor, corruption, smuggling, and harassment."
+      },
+      {
+        "title": "Responsible Drinking, Not Reckless Drinking",
+        "body": "DSP does not support drunk driving, underage drinking, violence, addiction, or public nuisance. Irresponsible behaviour must be handled firmly and fairly."
+      },
+      {
+        "title": "Safe Home Delivery with Strict Age Verification",
+        "body": "Regulated alcohol delivery can reduce drunk driving, crowding, harassment, and street nuisance when paired with legal-age verification and quantity limits."
+      },
+      {
+        "title": "No Harassment, No Moral Policing",
+        "body": "Responsible drinkers should not be treated like criminals. Law should target actual offences, not personal choices."
+      },
+      {
+        "title": "Respect at Home and in Society",
+        "body": "A person who works hard, pays taxes, supports businesses, and drinks responsibly deserves basic respect. Friday night should mean peace, not interrogation."
+      },
+      {
+        "title": "Employment and Local Economy",
+        "body": "Alcohol, hospitality, retail, logistics, food, and nightlife support lakhs of jobs and local businesses. Policy must recognise this economic reality."
+      },
+      {
+        "title": "Use Alcohol Taxes Transparently",
+        "body": "A fair share of alcohol revenue should support healthcare, de-addiction, road safety, public transport, mental health, and awareness programs."
+      },
+      {
+        "title": "Support for People Struggling with Addiction",
+        "body": "Addiction should be treated as a health and social issue. People need counselling, treatment access, family support, and rehabilitation, not public shame."
+      },
+      {
+        "title": "Safer Public Policy, Not Hypocrisy",
+        "body": "Regulate alcohol, educate people, prevent misuse, punish dangerous behaviour, but do not criminalise responsible adults."
+      }
+    ],
+    "sloganLabel": "Our Core Slogan",
+    "slogan": "We are not slaves of alcohol. We are responsible citizens with personal choice, dignity, and rights.",
+    "sloganStrong": "Daru Samaj Party - The Voice of Responsible Drinkers."
+  },
+  "vision": {
+    "sectionLabel": "Vision",
+    "title": "A society where responsible adults are treated with dignity.",
+    "body": "To build a society where responsible adult drinkers are treated with dignity, fairness, and respect - without unnecessary shame, harassment, or moral policing."
+  },
+  "mission": {
+    "sectionLabel": "Mission",
+    "title": "The voice of responsible drinkers.",
+    "body": "Daru Samaj Party works to become the voice of responsible drinkers by demanding practical alcohol policies, safer choices like home delivery, protection from unnecessary harassment, and social acceptance for adults who drink responsibly."
+  },
+  "join": {
+    "sectionLabel": "Join",
+    "title": "Become a founding member and get your Instagram-ready card.",
+    "body": "Submit your details, upload a clean photo, and generate a portrait JPG designed for a feed post.",
+    "statusInitial": "Fill the form to generate your official DSP membership card.",
+    "statusCreating": "Creating membership...",
+    "statusGenerated": "Membership generated and saved:",
+    "statusFailed": "Submission failed.",
+    "retryAfter": "Try again in",
+    "minutes": "minutes.",
+    "saveFallback": "Could not save the membership.",
+    "supabaseFallback": "Could not save the membership. Check Supabase setup.",
+    "downloadPhotoRequired": "Upload a photo before downloading the JPG card.",
+    "downloadFallback": "Could not export the JPG card. Try again after the photo loads.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "instagram": "Instagram handle",
+      "state": "State",
+      "district": "District",
+      "photo": "Photo",
+      "photoHelp": "JPG, PNG, or WebP. Maximum 5MB.",
+      "submit": "Generate Membership Card",
+      "submitting": "Generating...",
+      "download": "Download JPG",
+      "downloading": "Preparing JPG...",
+      "regenerate": "Regenerate Card"
+    },
+    "placeholders": {
+      "name": "Your full name",
+      "email": "you@example.com",
+      "phone": "+91 98765 43210",
+      "instagram": "@username",
+      "state": "Maharashtra",
+      "district": "Mumbai Suburban"
+    },
+    "validation": {
+      "name": "Enter your name.",
+      "email": "Enter a valid email address.",
+      "phone": "Enter a valid phone number.",
+      "state": "Enter your state.",
+      "district": "Enter your district.",
+      "instagram": "Enter a valid Instagram handle starting with @.",
+      "photo": "Upload your photo.",
+      "photoType": "Upload a JPG, PNG, or WebP photo.",
+      "photoSize": "Photo must be 5MB or smaller."
+    },
+    "card": {
+      "brand": "Daru Samaj Party",
+      "foundingMember": "Founding Member",
+      "uploadPhoto": "Upload Photo",
+      "state": "State",
+      "district": "District",
+      "status": "Status",
+      "active": "Active",
+      "membershipId": "Membership ID",
+      "website": "darusamajparty.online",
+      "hashtag": "#DARUSAMAJPARTY"
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 Daru Samaj Party",
+    "body": "Responsible drinking, dignity, and practical public policy.",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "join": "Become a member"
+  },
+  "legal": {
+    "back": "Back to home",
+    "terms": {
+      "metaTitle": "Terms & Conditions | Daru Samaj Party",
+      "metaDescription": "Terms and conditions for using the Daru Samaj Party website and membership experience.",
+      "sectionLabel": "Terms & Conditions",
+      "title": "Website Terms",
+      "intro": "These terms explain how visitors may use the Daru Samaj Party website, membership form, downloadable membership card, and related public pages.",
+      "ariaLabel": "Terms and conditions",
+      "sections": [
+        {
+          "title": "Use of the Website",
+          "body": "You may use this website for lawful, personal, and non-commercial purposes. Do not misuse the site, interfere with its operation, attempt unauthorized access, submit false or harmful data, or use the site in a way that violates applicable law."
+        },
+        {
+          "title": "Membership Submissions",
+          "body": "If you submit details through the membership form, you are responsible for the accuracy of the information and for ensuring you have permission to upload any photo or content you provide. We may reject, remove, or moderate submissions that are abusive, illegal, misleading, or otherwise unsuitable."
+        },
+        {
+          "title": "Responsible Conduct",
+          "body": "Daru Samaj Party supports responsible adult choice and does not encourage underage drinking, drunk driving, unsafe behavior, harassment, violence, addiction, or public nuisance. Visitors must follow all local alcohol, safety, and public-order laws."
+        },
+        {
+          "title": "Intellectual Property",
+          "body": "Site text, branding, images, generated membership-card layouts, and design assets are owned by or licensed to Daru Samaj Party unless otherwise stated. You may share public website pages and your own generated membership card, but you may not copy, resell, or misrepresent the site assets."
+        },
+        {
+          "title": "No Alcohol Sales",
+          "body": "This website does not sell alcohol, process alcohol orders, provide delivery services, or verify eligibility for alcohol purchase. Any references to policy, delivery, taxation, or regulation are public discussion points only."
+        },
+        {
+          "title": "Third-Party Links",
+          "body": "The website may link to social networks, email providers, and other third-party services. Those services are governed by their own terms and privacy policies, and we are not responsible for their content, availability, or practices."
+        },
+        {
+          "title": "Changes",
+          "body": "We may update these terms when the website changes or when legal, operational, or policy requirements change. Continued use of the site after updates means you accept the revised terms."
+        },
+        {
+          "title": "Contact",
+          "body": "For questions about these terms, contact darusamajparty@gmail.com."
+        }
+      ]
+    },
+    "privacy": {
+      "metaTitle": "Privacy Policy | Daru Samaj Party",
+      "metaDescription": "Privacy policy for the Daru Samaj Party website, membership form, and membership-card experience.",
+      "sectionLabel": "Privacy Policy",
+      "title": "Privacy Policy",
+      "intro": "This policy explains what information the Daru Samaj Party website may collect and how it is used for the membership experience.",
+      "ariaLabel": "Privacy policy",
+      "sections": [
+        {
+          "title": "Information We Collect",
+          "body": "If you use the membership form, we may collect the details you provide, such as name, social handle, city, state, and uploaded photo. We may also collect basic technical information needed to operate, secure, and improve the site."
+        },
+        {
+          "title": "How We Use Information",
+          "body": "Submitted information is used to provide the membership experience, generate a membership card, respond to contact requests, prevent spam or abuse, and maintain site reliability."
+        },
+        {
+          "title": "Sharing",
+          "body": "We do not sell personal information. Information may be processed by hosting, database, analytics, email, or security providers that help operate the website. We may also disclose information if required by law or to protect the site and its users."
+        },
+        {
+          "title": "Your Choices",
+          "body": "You can choose not to submit the membership form. To request removal or correction of submitted information, contact us using the email below and include enough detail for us to identify the submission."
+        },
+        {
+          "title": "Data Security",
+          "body": "We use reasonable operational safeguards, but no website or internet transmission can be guaranteed fully secure. Avoid submitting sensitive personal, financial, health, or identity-document information through the website."
+        },
+        {
+          "title": "Contact",
+          "body": "For privacy questions or data requests, contact darusamajparty@gmail.com."
+        }
+      ]
+    }
+  }
+}

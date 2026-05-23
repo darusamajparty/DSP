@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useRef, useState } from "react";
+import type { Messages } from "../lib/i18n/messages";
 
 type MemberRecord = {
   membershipId: string;
@@ -58,22 +59,26 @@ function makeMembershipId(state: string, district: string) {
   return `DSP-${stateCode}-${districtCode}-${String(random).padStart(5, "0")}`;
 }
 
-function validateForm(form: FormState, photo: File | null) {
-  if (!form.name.trim()) return "Enter your name.";
+type JoinExperienceProps = {
+  messages: Messages["join"];
+};
+
+function validateForm(form: FormState, photo: File | null, messages: Messages["join"]) {
+  if (!form.name.trim()) return messages.validation.name;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
-    return "Enter a valid email address.";
+    return messages.validation.email;
   }
   if (!/^[+()\-\s\d]{8,18}$/.test(form.phone.trim())) {
-    return "Enter a valid phone number.";
+    return messages.validation.phone;
   }
-  if (!form.state.trim()) return "Enter your state.";
-  if (!form.district.trim()) return "Enter your district.";
+  if (!form.state.trim()) return messages.validation.state;
+  if (!form.district.trim()) return messages.validation.district;
   if (!/^@[A-Za-z0-9._]{1,30}$/.test(form.instagram.trim())) {
-    return "Enter a valid Instagram handle starting with @.";
+    return messages.validation.instagram;
   }
-  if (!photo) return "Upload your photo.";
-  if (!IMAGE_TYPES.has(photo.type)) return "Upload a JPG, PNG, or WebP photo.";
-  if (photo.size > MAX_PHOTO_BYTES) return "Photo must be 5MB or smaller.";
+  if (!photo) return messages.validation.photo;
+  if (!IMAGE_TYPES.has(photo.type)) return messages.validation.photoType;
+  if (photo.size > MAX_PHOTO_BYTES) return messages.validation.photoSize;
   return "";
 }
 
@@ -141,13 +146,13 @@ function fitText(
   return size;
 }
 
-export default function JoinExperience() {
+export default function JoinExperience({ messages }: JoinExperienceProps) {
   const [form, setForm] = useState<FormState>(initialForm);
   const [photo, setPhoto] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState("");
   const [member, setMember] = useState<MemberRecord | null>(null);
   const [status, setStatus] = useState(
-    "Fill the form to generate your official DSP membership card.",
+    messages.statusInitial,
   );
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -182,12 +187,12 @@ export default function JoinExperience() {
     }
     if (!IMAGE_TYPES.has(file.type)) {
       setPhotoPreview("");
-      setError("Upload a JPG, PNG, or WebP photo.");
+      setError(messages.validation.photoType);
       return;
     }
     if (file.size > MAX_PHOTO_BYTES) {
       setPhotoPreview("");
-      setError("Photo must be 5MB or smaller.");
+      setError(messages.validation.photoSize);
       return;
     }
     setPhotoPreview(URL.createObjectURL(file));
@@ -197,7 +202,7 @@ export default function JoinExperience() {
     event.preventDefault();
     setError("");
 
-    const validation = validateForm(form, photo);
+    const validation = validateForm(form, photo, messages);
     if (validation) {
       setError(validation);
       return;
@@ -205,7 +210,7 @@ export default function JoinExperience() {
 
     const safePhoto = photo as File;
     setIsSubmitting(true);
-    setStatus("Creating membership...");
+    setStatus(messages.statusCreating);
 
     try {
       const payload = new FormData();
@@ -226,22 +231,22 @@ export default function JoinExperience() {
       if (!response.ok) {
         const retryAfter =
           response.status === 429 && data.retryAfterSeconds
-            ? ` Try again in ${Math.ceil(Number(data.retryAfterSeconds) / 60)} minutes.`
+            ? ` ${messages.retryAfter} ${Math.ceil(Number(data.retryAfterSeconds) / 60)} ${messages.minutes}`
             : "";
-        throw new Error(`${data.error || "Could not save the membership."}${retryAfter}`);
+        throw new Error(`${data.error || messages.saveFallback}${retryAfter}`);
       }
 
       const record = data.member as MemberRecord;
 
       setMember(record);
-      setStatus(`Membership generated and saved: ${record.membershipId}`);
+      setStatus(`${messages.statusGenerated} ${record.membershipId}`);
     } catch (submitError) {
       const message =
         submitError instanceof Error
           ? submitError.message
-          : "Could not save the membership. Check Supabase setup.";
+          : messages.supabaseFallback;
       setError(message);
-      setStatus("Submission failed.");
+      setStatus(messages.statusFailed);
     } finally {
       setIsSubmitting(false);
     }
@@ -249,7 +254,7 @@ export default function JoinExperience() {
 
   const downloadCard = async () => {
     if (!previewMember.photoUrl) {
-      setError("Upload a photo before downloading the JPG card.");
+      setError(messages.downloadPhotoRequired);
       return;
     }
     setIsDownloading(true);
@@ -312,10 +317,10 @@ export default function JoinExperience() {
 
       ctx.fillStyle = "#fff3d4";
       ctx.font = "900 28px Arial, sans-serif";
-      ctx.fillText("DARU SAMAJ PARTY", 172, 100);
+      ctx.fillText(messages.card.brand.toUpperCase(), 172, 100);
       ctx.fillStyle = "#c8ff43";
       ctx.textAlign = "right";
-      ctx.fillText("FOUNDING MEMBER", 1026, 92);
+      ctx.fillText(messages.card.foundingMember.toUpperCase(), 1026, 92);
       ctx.textAlign = "left";
 
       // Header divider — leaves 30px breathing room before content
@@ -395,7 +400,7 @@ export default function JoinExperience() {
       // State
       ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
       ctx.font = "900 22px Arial, sans-serif";
-      ctx.fillText("STATE", IPX, CT + 306);
+      ctx.fillText(messages.card.state.toUpperCase(), IPX, CT + 306);
       const stateSize = fitText(ctx, previewMember.state.toUpperCase(), IW - 64, 50, "Arial, sans-serif", "900", 22);
       ctx.fillStyle = "#fff3d4";
       ctx.font = `900 ${stateSize}px Arial, sans-serif`;
@@ -405,7 +410,7 @@ export default function JoinExperience() {
       // District
       ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
       ctx.font = "900 22px Arial, sans-serif";
-      ctx.fillText("DISTRICT", IPX, CT + 470);
+      ctx.fillText(messages.card.district.toUpperCase(), IPX, CT + 470);
       const districtSize = fitText(ctx, previewMember.district.toUpperCase(), IW - 64, 50, "Arial, sans-serif", "900", 22);
       ctx.fillStyle = "#fff3d4";
       ctx.font = `900 ${districtSize}px Arial, sans-serif`;
@@ -415,10 +420,10 @@ export default function JoinExperience() {
       // Status
       ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
       ctx.font = "900 22px Arial, sans-serif";
-      ctx.fillText("STATUS", IPX, CT + 634);
+      ctx.fillText(messages.card.status.toUpperCase(), IPX, CT + 634);
       ctx.fillStyle = "#c8ff43";
       ctx.font = "900 44px Arial, sans-serif";
-      ctx.fillText("ACTIVE", IPX, CT + 706);
+      ctx.fillText(messages.card.active.toUpperCase(), IPX, CT + 706);
       // CT + 706 = 874 → panel bottom = CT+CH = 928 → 54px quiet margin ✓
 
       // ── WHISKEY BOTTLE (drawn over info panel, top-right corner) ───────
@@ -450,7 +455,7 @@ export default function JoinExperience() {
       ctx.fillStyle = "#7b1719";
       ctx.font = "900 20px Arial, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("MEMBERSHIP ID", idCX, IDY + 34);
+      ctx.fillText(messages.card.membershipId.toUpperCase(), idCX, IDY + 34);
 
       const idBoxW = QRX - 92;
       ctx.fillStyle = "#7b1719";
@@ -485,11 +490,11 @@ export default function JoinExperience() {
       ctx.fillStyle = "rgba(255, 243, 212, 0.5)";
       ctx.font = "700 23px Arial, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("darusamajparty.info", 540, FDY + 50);
+      ctx.fillText(messages.card.website, 540, FDY + 50);
 
       ctx.fillStyle = "rgba(200, 255, 67, 0.68)";
       ctx.font = "900 21px Arial, sans-serif";
-      ctx.fillText("#DARUSAMAJPARTY", 540, FDY + 94);
+      ctx.fillText(messages.card.hashtag, 540, FDY + 94);
 
       // Closing decorative stripe
       ctx.strokeStyle = "rgba(255, 212, 59, 0.32)";
@@ -507,7 +512,7 @@ export default function JoinExperience() {
       link.download = `${previewMember.membershipId}-dsp-card.jpg`;
       link.click();
     } catch {
-      setError("Could not export the JPG card. Try again after the photo loads.");
+      setError(messages.downloadFallback);
     } finally {
       setIsDownloading(false);
     }
@@ -527,90 +532,87 @@ export default function JoinExperience() {
   return (
     <section className="join-section" id="join">
       <div className="join-copy">
-        <div className="section-label">Join</div>
-        <h2>Become a founding member and get your Instagram-ready card.</h2>
-        <p>
-          Submit your details, upload a clean photo, and generate a portrait JPG
-          designed for a feed post.
-        </p>
+        <div className="section-label">{messages.sectionLabel}</div>
+        <h2>{messages.title}</h2>
+        <p>{messages.body}</p>
       </div>
 
       <div className="join-layout">
         <form className="member-form" onSubmit={submit} noValidate>
           <div className="form-grid">
             <label>
-              Name
+              {messages.form.name}
               <input
                 value={form.name}
                 onChange={(event) => updateField("name", event.target.value)}
                 name="name"
                 type="text"
                 autoComplete="name"
-                placeholder="Your full name"
+                placeholder={messages.placeholders.name}
                 required
               />
             </label>
             <label>
-              Email
+              {messages.form.email}
               <input
                 value={form.email}
                 onChange={(event) => updateField("email", event.target.value)}
                 name="email"
                 type="email"
                 autoComplete="email"
-                placeholder="you@example.com"
+                placeholder={messages.placeholders.email}
                 required
               />
             </label>
             <label>
-              Phone
+              {messages.form.phone}
               <input
                 value={form.phone}
                 onChange={(event) => updateField("phone", event.target.value)}
                 name="phone"
                 type="tel"
                 autoComplete="tel"
-                placeholder="+91 98765 43210"
+                placeholder={messages.placeholders.phone}
                 required
               />
             </label>
             <label>
-              Instagram handle
+              {messages.form.instagram}
               <input
                 value={form.instagram}
                 onChange={(event) => updateField("instagram", event.target.value)}
                 name="instagram"
                 type="text"
-                placeholder="@username"
+                placeholder={messages.placeholders.instagram}
                 required
               />
             </label>
             <label>
-              State
+              {messages.form.state}
               <input
                 value={form.state}
                 onChange={(event) => updateField("state", event.target.value)}
                 name="state"
                 type="text"
-                placeholder="Maharashtra"
+                placeholder={messages.placeholders.state}
                 required
               />
             </label>
             <label>
-              District
+              {messages.form.district}
               <input
                 value={form.district}
                 onChange={(event) => updateField("district", event.target.value)}
                 name="district"
                 type="text"
-                placeholder="Mumbai Suburban"
+                placeholder={messages.placeholders.district}
                 required
               />
             </label>
           </div>
 
           <label className="photo-input">
-            Photo
+            {messages.form.photo}
             <input
               name="photo"
               type="file"
@@ -618,11 +620,11 @@ export default function JoinExperience() {
               onChange={(event) => onPhotoChange(event.target.files?.[0] || null)}
               required
             />
-            <span>JPG, PNG, or WebP. Maximum 5MB.</span>
+            <span>{messages.form.photoHelp}</span>
           </label>
 
           <button className="button button-primary submit-button" disabled={isSubmitting}>
-            {isSubmitting ? "Generating..." : "Generate Membership Card"}
+            {isSubmitting ? messages.form.submitting : messages.form.submit}
           </button>
           <p className="form-status" aria-live="polite">
             {error || status}
@@ -637,15 +639,15 @@ export default function JoinExperience() {
               <div className="card-topline">
                 <span className="card-brand">
                   <img src={DSP_LOGO_SRC} alt="" />
-                  Daru Samaj Party
+                  {messages.card.brand}
                 </span>
-                <strong>Founding Member</strong>
+                <strong>{messages.card.foundingMember}</strong>
               </div>
               <div className="card-photo">
                 {previewMember.photoUrl ? (
                   <img src={previewMember.photoUrl} alt="Uploaded member photo" />
                 ) : (
-                  <span>Upload Photo</span>
+                  <span>{messages.card.uploadPhoto}</span>
                 )}
               </div>
               <div className="card-identity">
@@ -654,26 +656,26 @@ export default function JoinExperience() {
                 <span>{previewMember.instagram}</span>
                 <div className="card-location">
                   <div className="card-data-row">
-                    <span>State</span>
+                    <span>{messages.card.state}</span>
                     <strong>{previewMember.state}</strong>
                   </div>
                   <div className="card-data-row">
-                    <span>District</span>
+                    <span>{messages.card.district}</span>
                     <strong>{previewMember.district}</strong>
                   </div>
                   <div className="card-data-row">
-                    <span>Status</span>
-                    <strong style={{ color: "var(--green)" }}>Active</strong>
+                    <span>{messages.card.status}</span>
+                    <strong style={{ color: "var(--green)" }}>{messages.card.active}</strong>
                   </div>
                 </div>
               </div>
               <div className="card-footer" aria-hidden="true">
-                <span>darusamajparty.online</span>
-                <strong>#DARUSAMAJPARTY</strong>
+                <span>{messages.card.website}</span>
+                <strong>{messages.card.hashtag}</strong>
               </div>
               <div className="card-id-panel">
                 <div className="card-id-copy">
-                  <span>Membership ID</span>
+                  <span>{messages.card.membershipId}</span>
                   <strong>{previewMember.membershipId}</strong>
                 </div>
                 <a
@@ -696,7 +698,7 @@ export default function JoinExperience() {
               onClick={downloadCard}
               disabled={isDownloading}
             >
-              {isDownloading ? "Preparing JPG..." : "Download JPG"}
+              {isDownloading ? messages.form.downloading : messages.form.download}
             </button>
             <button
               className="button button-ghost-dark"
@@ -704,7 +706,7 @@ export default function JoinExperience() {
               onClick={regenerateCard}
               disabled={!member}
             >
-              Regenerate Card
+              {messages.form.regenerate}
             </button>
           </div>
         </div>

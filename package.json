@@ -6,10 +6,13 @@
     "dev": "next dev --hostname 127.0.0.1 --port 4174",
     "build": "next build",
     "start": "next start --hostname 127.0.0.1 --port 4174",
-    "test": "node --test qa/*.test.cjs",
-    "qa": "node qa/verify-site.cjs"
+    "test": "node --test qa/*.test.cjs && npm run check:locales",
+    "qa": "node qa/verify-site.cjs",
+    "check:locales": "node scripts/check-locales.mjs",
+    "translate:locales": "node scripts/translate-locales.mjs --locales hi,mr,bn,gu,pa,ta,te,kn,ml,ur"
   },
   "dependencies": {
+    "@google-cloud/translate": "^9.3.0",
     "@supabase/supabase-js": "^2.49.8",
     "next": "^15.3.2",
     "react": "^19.1.0",

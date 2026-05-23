@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "brandKicker": "అధికారిక ఉద్యమం",
+    "about": "గురించి",
+    "manifesto": "ప్రకటన పత్రం",
+    "vision": "దృష్టి",
+    "join": "చేరండి",
+    "language": "భాష"
+  },
+  "hero": {
+    "body": "ACPs(Alcohol Consuming Persons) యొక్క స్వరం, గౌరవం కోసం పోరాటం. సిగ్గు లేదు, వివక్ష లేదు: బాధ్యతగా తాగే వారికి హక్కులు, భద్రత మరియు సౌలభ్యం కావాలి.",
+    "primaryCta": "పార్టీలో చేరండి",
+    "secondaryCta": "ప్రకటన పత్రం చదవండి",
+    "captionTitle": "స్థాపక సభ్యత్వ ప్రచారం"
+  },
+  "about": {
+    "sectionLabel": "Daru Samaj Party గురించి",
+    "title": "బాధ్యతగా తాగే వారు గౌరవం, భద్రత మరియు సామాజిక మర్యాదకు అర్హులు.",
+    "beliefLineOne": "తాగడం నేరం కాదు.",
+    "beliefLineTwo": "సమస్య బాధ్యతారాహిత్యం."
+  },
+  "manifesto": {
+    "sectionLabel": "Daru Samaj Party ప్రకటన పత్రం",
+    "title": "గౌరవం. భద్రత. బాధ్యత. స్వేచ్ఛ."
+  },
+  "vision": {
+    "sectionLabel": "దృష్టి",
+    "title": "బాధ్యతగల పెద్దలకు గౌరవంతో వ్యవహరించే సమాజం."
+  },
+  "join": {
+    "sectionLabel": "చేరండి",
+    "title": "స్థాపక సభ్యుడిగా మారి మీ Instagram-ready కార్డ్ పొందండి.",
+    "form": {
+      "name": "పేరు",
+      "email": "ఇమెయిల్",
+      "phone": "ఫోన్",
+      "instagram": "Instagram హ్యాండిల్",
+      "state": "రాష్ట్రం",
+      "district": "జిల్లా",
+      "photo": "ఫోటో",
+      "submit": "సభ్యత్వ కార్డ్ సృష్టించండి",
+      "download": "JPG డౌన్‌లోడ్"
+    },
+    "card": {
+      "foundingMember": "స్థాపక సభ్యుడు",
+      "uploadPhoto": "ఫోటో అప్‌లోడ్",
+      "state": "రాష్ట్రం",
+      "district": "జిల్లా",
+      "status": "స్థితి",
+      "active": "సక్రియం",
+      "membershipId": "సభ్యత్వ ID"
+    }
+  },
+  "footer": {
+    "terms": "నిబంధనలు",
+    "privacy": "గోప్యతా విధానం",
+    "join": "సభ్యుడిగా మారండి"
+  },
+  "legal": {
+    "back": "హోమ్‌కు తిరిగి",
+    "terms": {
+      "sectionLabel": "నిబంధనలు",
+      "title": "వెబ్‌సైట్ నిబంధనలు"
+    },
+    "privacy": {
+      "sectionLabel": "గోప్యతా విధానం",
+      "title": "గోప్యతా విధానం"
+    }
+  }
+}

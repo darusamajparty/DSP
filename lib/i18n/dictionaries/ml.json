@@ -1,0 +1,66 @@
+{
+  "navigation": {
+    "brandKicker": "ഔദ്യോഗിക പ്രസ്ഥാനം",
+    "about": "വിവരം",
+    "manifesto": "പ്രഖ്യാപനപത്രം",
+    "vision": "ദർശനം",
+    "join": "ചേരുക",
+    "language": "ഭാഷ"
+  },
+  "hero": {
+    "body": "ACPs(Alcohol Consuming Persons) ന്റെ ശബ്ദം, മാനത്തിനായുള്ള പോരാട്ടം. ലജ്ജയില്ല, വിവേചനമില്ല: ഉത്തരവാദിത്തത്തോടെ കുടിക്കുന്നവർക്ക് അവകാശം, സുരക്ഷ, സൗകര്യം ലഭിക്കണം.",
+    "primaryCta": "പാർട്ടിയിൽ ചേരുക",
+    "secondaryCta": "പ്രഖ്യാപനപത്രം വായിക്കുക",
+    "captionTitle": "സ്ഥാപക അംഗത്വ ക്യാമ്പെയ്ൻ"
+  },
+  "about": {
+    "sectionLabel": "Daru Samaj Party കുറിച്ച്",
+    "title": "ഉത്തരവാദിത്തത്തോടെ കുടിക്കുന്നവർ മാനവും സുരക്ഷയും സാമൂഹിക ബഹുമാനവും അർഹിക്കുന്നു.",
+    "beliefLineOne": "കുടിക്കുന്നത് കുറ്റമല്ല.",
+    "beliefLineTwo": "പ്രശ്നം ഉത്തരവാദിത്തമില്ലായ്മയാണ്."
+  },
+  "manifesto": {
+    "sectionLabel": "Daru Samaj Party പ്രഖ്യാപനപത്രം",
+    "title": "മാനം. സുരക്ഷ. ഉത്തരവാദിത്തം. സ്വാതന്ത്ര്യം."
+  },
+  "join": {
+    "sectionLabel": "ചേരുക",
+    "title": "സ്ഥാപക അംഗമാവുകയും നിങ്ങളുടെ Instagram-ready കാർഡ് നേടുകയും ചെയ്യുക.",
+    "form": {
+      "name": "പേര്",
+      "email": "ഇമെയിൽ",
+      "phone": "ഫോൺ",
+      "instagram": "Instagram ഹാൻഡിൽ",
+      "state": "സംസ്ഥാനം",
+      "district": "ജില്ല",
+      "photo": "ഫോട്ടോ",
+      "submit": "അംഗത്വ കാർഡ് സൃഷ്ടിക്കുക",
+      "download": "JPG ഡൗൺലോഡ്"
+    },
+    "card": {
+      "foundingMember": "സ്ഥാപക അംഗം",
+      "uploadPhoto": "ഫോട്ടോ അപ്‌ലോഡ്",
+      "state": "സംസ്ഥാനം",
+      "district": "ജില്ല",
+      "status": "നില",
+      "active": "സജീവം",
+      "membershipId": "അംഗത്വ ID"
+    }
+  },
+  "footer": {
+    "terms": "നിബന്ധനകൾ",
+    "privacy": "സ്വകാര്യതാ നയം",
+    "join": "അംഗമാകുക"
+  },
+  "legal": {
+    "back": "ഹോമിലേക്ക് മടങ്ങുക",
+    "terms": {
+      "sectionLabel": "നിബന്ധനകൾ",
+      "title": "വെബ്‌സൈറ്റ് നിബന്ധനകൾ"
+    },
+    "privacy": {
+      "sectionLabel": "സ്വകാര്യതാ നയം",
+      "title": "സ്വകാര്യതാ നയം"
+    }
+  }
+}

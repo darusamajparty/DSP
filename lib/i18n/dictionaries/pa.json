@@ -1,0 +1,66 @@
+{
+  "navigation": {
+    "brandKicker": "ਅਧਿਕਾਰਕ ਅੰਦੋਲਨ",
+    "about": "ਜਾਣਕਾਰੀ",
+    "manifesto": "ਘੋਸ਼ਣਾ ਪੱਤਰ",
+    "vision": "ਦ੍ਰਿਸ਼ਟੀ",
+    "join": "ਜੁੜੋ",
+    "language": "ਭਾਸ਼ਾ"
+  },
+  "hero": {
+    "body": "ACPs(Alcohol Consuming Persons) ਦੀ ਆਵਾਜ਼, ਸਨਮਾਨ ਦੀ ਲੜਾਈ। ਸ਼ਰਮ ਨਹੀਂ, ਭੇਦਭਾਵ ਨਹੀਂ: ਜ਼ਿੰਮੇਵਾਰ ਪੀਣ ਵਾਲਿਆਂ ਨੂੰ ਅਧਿਕਾਰ, ਸੁਰੱਖਿਆ ਅਤੇ ਸੁਵਿਧਾ ਮਿਲਣੀ ਚਾਹੀਦੀ ਹੈ।",
+    "primaryCta": "ਪਾਰਟੀ ਨਾਲ ਜੁੜੋ",
+    "secondaryCta": "ਘੋਸ਼ਣਾ ਪੱਤਰ ਪੜ੍ਹੋ",
+    "captionTitle": "ਸੰਸਥਾਪਕ ਮੈਂਬਰਸ਼ਿਪ ਮੁਹਿੰਮ"
+  },
+  "about": {
+    "sectionLabel": "Daru Samaj Party ਬਾਰੇ",
+    "title": "ਜ਼ਿੰਮੇਵਾਰ ਪੀਣ ਵਾਲੇ ਸਨਮਾਨ, ਸੁਰੱਖਿਆ ਅਤੇ ਸਮਾਜਿਕ ਆਦਰ ਦੇ ਹੱਕਦਾਰ ਹਨ।",
+    "beliefLineOne": "ਪੀਣਾ ਅਪਰਾਧ ਨਹੀਂ।",
+    "beliefLineTwo": "ਸਮੱਸਿਆ ਗੈਰ-ਜ਼ਿੰਮੇਵਾਰੀ ਹੈ।"
+  },
+  "manifesto": {
+    "sectionLabel": "Daru Samaj Party ਦਾ ਘੋਸ਼ਣਾ ਪੱਤਰ",
+    "title": "ਸਨਮਾਨ। ਸੁਰੱਖਿਆ। ਜ਼ਿੰਮੇਵਾਰੀ। ਆਜ਼ਾਦੀ।"
+  },
+  "join": {
+    "sectionLabel": "ਜੁੜੋ",
+    "title": "ਸੰਸਥਾਪਕ ਮੈਂਬਰ ਬਣੋ ਅਤੇ ਆਪਣਾ Instagram-ready ਕਾਰਡ ਲਵੋ।",
+    "form": {
+      "name": "ਨਾਮ",
+      "email": "ਈਮੇਲ",
+      "phone": "ਫੋਨ",
+      "instagram": "Instagram ਹੈਂਡਲ",
+      "state": "ਰਾਜ",
+      "district": "ਜ਼ਿਲ੍ਹਾ",
+      "photo": "ਫੋਟੋ",
+      "submit": "ਮੈਂਬਰਸ਼ਿਪ ਕਾਰਡ ਬਣਾਓ",
+      "download": "JPG ਡਾਊਨਲੋਡ ਕਰੋ"
+    },
+    "card": {
+      "foundingMember": "ਸੰਸਥਾਪਕ ਮੈਂਬਰ",
+      "uploadPhoto": "ਫੋਟੋ ਅਪਲੋਡ ਕਰੋ",
+      "state": "ਰਾਜ",
+      "district": "ਜ਼ਿਲ੍ਹਾ",
+      "status": "ਸਥਿਤੀ",
+      "active": "ਸਰਗਰਮ",
+      "membershipId": "ਮੈਂਬਰਸ਼ਿਪ ID"
+    }
+  },
+  "footer": {
+    "terms": "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+    "privacy": "ਪਰਦੇਦਾਰੀ ਨੀਤੀ",
+    "join": "ਮੈਂਬਰ ਬਣੋ"
+  },
+  "legal": {
+    "back": "ਹੋਮ ਤੇ ਵਾਪਸ",
+    "terms": {
+      "sectionLabel": "ਨਿਯਮ ਅਤੇ ਸ਼ਰਤਾਂ",
+      "title": "ਵੈਬਸਾਈਟ ਨਿਯਮ"
+    },
+    "privacy": {
+      "sectionLabel": "ਪਰਦੇਦਾਰੀ ਨੀਤੀ",
+      "title": "ਪਰਦੇਦਾਰੀ ਨੀਤੀ"
+    }
+  }
+}
