@@ -23,8 +23,8 @@ export default function LanguageSwitcher({
 
   return (
     <label className="language-switcher">
-      <span>{label}</span>
       <select
+        aria-label={label}
         value={currentLocale}
         onChange={(event) => {
           window.location.href = localizedPath(event.target.value as Locale, pathWithoutLocale);
