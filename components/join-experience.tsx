@@ -44,22 +44,6 @@ function cleanInstagram(value: string) {
   return value.trim();
 }
 
-function makeMembershipId(state: string, district: string) {
-  const stateCode = state
-    .trim()
-    .slice(0, 2)
-    .toUpperCase()
-    .replace(/[^A-Z]/g, "X")
-    .padEnd(2, "X");
-  const districtCode = district
-    .trim()
-    .slice(0, 3)
-    .toUpperCase()
-    .replace(/[^A-Z]/g, "X")
-    .padEnd(3, "X");
-  const random = crypto.getRandomValues(new Uint32Array(1))[0] % 100000;
-  return `DSP-${stateCode}-${districtCode}-${String(random).padStart(5, "0")}`;
-}
 
 type JoinExperienceProps = {
   messages: Messages["join"];
@@ -241,6 +225,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
 
       setMember(record);
       setStatus(`${messages.statusGenerated} ${record.membershipId}`);
+      await downloadCard(record, photoPreview);
     } catch (submitError) {
       const message =
         submitError instanceof Error
@@ -253,20 +238,22 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
     }
   };
 
-  const downloadCard = async () => {
-    if (!member) {
+  const downloadCard = async (overrideMember?: MemberRecord, overridePhotoUrl?: string) => {
+    const activeMember = overrideMember ?? member;
+    if (!activeMember) {
       return;
     }
-    if (!previewMember.photoUrl) {
+    const cardPhotoUrl = overridePhotoUrl ?? previewMember.photoUrl;
+    if (!cardPhotoUrl) {
       setError(messages.downloadPhotoRequired);
       return;
     }
-    const generatedMembershipId = member.membershipId;
+    const generatedMembershipId = activeMember.membershipId;
     setIsDownloading(true);
     setError("");
     try {
       const [image, logo, bottle, websiteQr] = await Promise.all([
-        loadCanvasImage(previewMember.photoUrl),
+        loadCanvasImage(cardPhotoUrl),
         loadCanvasImage(DSP_LOGO_SRC),
         loadCanvasImage(WHISKEY_BOTTLE_SRC),
         loadCanvasImage(DSP_WEBSITE_QR_SRC),
@@ -523,16 +510,6 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
     }
   };
 
-  const regenerateCard = () => {
-    setMember((current) =>
-      current
-        ? {
-            ...current,
-            membershipId: makeMembershipId(current.state, current.district),
-          }
-        : null,
-    );
-  };
 
   return (
     <section className="join-section" id="join">
@@ -628,9 +605,11 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
             <span>{messages.form.photoHelp}</span>
           </label>
 
-          <button className="button button-primary submit-button" disabled={isSubmitting}>
-            {isSubmitting ? messages.form.submitting : messages.form.submit}
-          </button>
+          {!member && (
+            <button className="button button-primary submit-button" disabled={isSubmitting}>
+              {isSubmitting ? messages.form.submitting : messages.form.submit}
+            </button>
+          )}
           <p className="form-status" aria-live="polite">
             {error || status}
           </p>
@@ -699,22 +678,16 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
           </div>
 
           <div className="card-actions">
-            <button
-              className="button button-primary"
-              type="button"
-              onClick={downloadCard}
-              disabled={!member || isDownloading}
-            >
-              {isDownloading ? messages.form.downloading : messages.form.download}
-            </button>
-            <button
-              className="button button-ghost-dark"
-              type="button"
-              onClick={regenerateCard}
-              disabled={!member}
-            >
-              {messages.form.regenerate}
-            </button>
+            {member && (
+              <button
+                className="button button-primary"
+                type="button"
+                onClick={() => downloadCard()}
+                disabled={isDownloading}
+              >
+                {isDownloading ? messages.form.downloading : messages.form.download}
+              </button>
+            )}
           </div>
         </div>
       </div>
