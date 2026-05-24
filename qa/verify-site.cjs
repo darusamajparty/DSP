@@ -70,12 +70,6 @@ function readJpegDimensions(filePath) {
   await desktop.fill('input[name="instagram"]', "@dsp_member");
   await desktop.setInputFiles('input[name="photo"]', sampleImage);
   await desktop.locator(".card-photo img").waitFor({ state: "visible" });
-  const downloadPromise = desktop.waitForEvent("download");
-  await desktop.click('button:has-text("Download JPG")');
-  const download = await downloadPromise;
-  const downloadPath = path.join(__dirname, "..", "assets", "membership-card-qa.jpg");
-  await download.saveAs(downloadPath);
-  const jpgDimensions = readJpegDimensions(downloadPath);
   await desktop.click('button:has-text("Generate Membership Card")');
   await desktop.waitForFunction(() => {
     const text = document.querySelector(".form-status")?.textContent || "";
@@ -88,6 +82,16 @@ function readJpegDimensions(filePath) {
   });
 
   const formNote = await desktop.locator(".form-status").innerText();
+  const submissionBlocked = !formNote.includes("Membership generated");
+  let jpgDimensions = null;
+  if (!submissionBlocked) {
+    const downloadPromise = desktop.waitForEvent("download");
+    await desktop.click('button:has-text("Download JPG")');
+    const download = await downloadPromise;
+    const downloadPath = path.join(__dirname, "..", "assets", "membership-card-qa.jpg");
+    await download.saveAs(downloadPath);
+    jpgDimensions = readJpegDimensions(downloadPath);
+  }
   const cardText = await desktop.locator(".membership-card").innerText();
   const cardBox = await desktop.locator(".membership-card").boundingBox();
   const cardVisuals = await desktop.evaluate(() => ({
@@ -109,7 +113,6 @@ function readJpegDimensions(filePath) {
       };
     })(),
   }));
-  const submissionBlocked = !formNote.includes("Membership generated");
   await desktop.screenshot({ path: "assets/desktop-qa.png", fullPage: true });
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 920 }, isMobile: true });
@@ -212,7 +215,7 @@ function readJpegDimensions(filePath) {
     !result.cardVisuals.premiumShell ||
     !result.cardVisuals.idPanel ||
     !result.cardVisuals.qrMark ||
-    result.cardVisuals.qrHref !== "https://darusamajparty.online" ||
+    result.cardVisuals.qrHref !== "https://darusamajparty.info" ||
     result.cardVisuals.qrSrc !== "/assets/dsp-website-qr.svg" ||
     !result.cardVisuals.bottle ||
     result.cardVisuals.logoWidth < 48 ||

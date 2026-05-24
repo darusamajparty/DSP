@@ -124,6 +124,10 @@
     "supabaseFallback": "Could not save the membership. Check Supabase setup.",
     "downloadPhotoRequired": "Upload a photo before downloading the JPG card.",
     "downloadFallback": "Could not export the JPG card. Try again after the photo loads.",
+    "loading": {
+      "submitting": "Creating your card...",
+      "downloading": "Preparing your JPG..."
+    },
     "form": {
       "name": "Name",
       "email": "Email",
@@ -167,7 +171,7 @@
       "status": "Status",
       "active": "Active",
       "membershipId": "Membership ID",
-      "website": "darusamajparty.online",
+      "website": "darusamajparty.info",
       "hashtag": "#DARUSAMAJPARTY"
     }
   },

@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: LocalePageProps): Promise<Met
   const { locale } = await params;
   if (!isLocale(locale) || locale === defaultLocale) return {};
   const messages = getMessages(locale);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://darusamajparty.online";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://darusamajparty.info";
 
   return {
     metadataBase: new URL(siteUrl),

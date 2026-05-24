@@ -44,6 +44,53 @@ function cleanInstagram(value: string) {
   return value.trim();
 }
 
+function isInstagramInAppBrowser() {
+  return /Instagram/i.test(navigator.userAgent);
+}
+
+function canvasToJpegBlob(canvas: HTMLCanvasElement) {
+  return new Promise<Blob>((resolve, reject) => {
+    canvas.toBlob(
+      (blob) => {
+        if (blob) {
+          resolve(blob);
+          return;
+        }
+        reject(new Error("Could not export the card image."));
+      },
+      "image/jpeg",
+      0.96,
+    );
+  });
+}
+
+async function saveCardImage(canvas: HTMLCanvasElement, fileName: string) {
+  const blob = await canvasToJpegBlob(canvas);
+  const file = new File([blob], fileName, { type: "image/jpeg" });
+
+  if (
+    isInstagramInAppBrowser() &&
+    typeof navigator.canShare === "function" &&
+    typeof navigator.share === "function" &&
+    navigator.canShare({ files: [file] })
+  ) {
+    await navigator.share({
+      files: [file],
+      title: "DSP Membership Card",
+    });
+    return;
+  }
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 
 type JoinExperienceProps = {
   messages: Messages["join"];
@@ -498,11 +545,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
 
       ctx.textAlign = "left";
 
-      const dataUrl = canvas.toDataURL("image/jpeg", 0.96);
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = `${generatedMembershipId}-dsp-card.jpg`;
-      link.click();
+      await saveCardImage(canvas, `${generatedMembershipId}-dsp-card.jpg`);
     } catch {
       setError(messages.downloadFallback);
     } finally {
@@ -510,6 +553,8 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
     }
   };
 
+
+  const isLoading = isSubmitting || isDownloading;
 
   return (
     <section className="join-section" id="join">
@@ -675,6 +720,25 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
                 </div>
               ) : null}
             </div>
+
+            {isLoading && (
+              <div
+                className="card-loading-overlay"
+                role="status"
+                aria-live="polite"
+                aria-label={isSubmitting ? messages.loading.submitting : messages.loading.downloading}
+              >
+                <div className="card-loading-scanner" aria-hidden="true" />
+                <div className="card-loading-badge" aria-hidden="true">
+                  <span className="card-loading-dot" />
+                  <span className="card-loading-dot" />
+                  <span className="card-loading-dot" />
+                </div>
+                <p className="card-loading-text">
+                  {isSubmitting ? messages.loading.submitting : messages.loading.downloading}
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="card-actions">

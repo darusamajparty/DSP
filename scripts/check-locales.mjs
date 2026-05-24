@@ -11,7 +11,7 @@ const protectedTerms = [
   "Alcohol Consuming Persons",
   "#DARUSAMAJPARTY",
   "darusamajparty@gmail.com",
-  "darusamajparty.online",
+  "darusamajparty.info",
   "Instagram",
   "Facebook",
   "YouTube",

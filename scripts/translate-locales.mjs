@@ -12,7 +12,7 @@ const protectedTerms = [
   "Alcohol Consuming Persons",
   "#DARUSAMAJPARTY",
   "darusamajparty@gmail.com",
-  "darusamajparty.online",
+  "darusamajparty.info",
   "Instagram",
   "Facebook",
   "YouTube",
@@ -68,7 +68,7 @@ function setPath(target, dottedPath, value) {
 }
 
 function shouldSkip(value) {
-  return protectedTerms.some((term) => value === term || value.includes(`@`) || value.includes(".online"));
+  return protectedTerms.some((term) => value === term || value.includes(`@`) || value.includes(".info"));
 }
 
 async function main() {

@@ -383,7 +383,7 @@ const PROTECTED_TERMS = [
   "Alcohol Consuming Persons",
   "#DARUSAMAJPARTY",
   "darusamajparty@gmail.com",
-  "darusamajparty.online",
+  "darusamajparty.info",
   "Instagram",
   "Facebook",
   "YouTube",
@@ -713,7 +713,7 @@ Create `app/[locale]/terms/page.tsx` and `app/[locale]/privacy/page.tsx` using t
 
 - [ ] **Step 4: Generate localized metadata**
 
-Add `generateMetadata` to localized pages and use localized dictionary meta values. Keep `metadataBase` as `https://darusamajparty.online` unless `NEXT_PUBLIC_SITE_URL` is set.
+Add `generateMetadata` to localized pages and use localized dictionary meta values. Keep `metadataBase` as `https://darusamajparty.info` unless `NEXT_PUBLIC_SITE_URL` is set.
 
 - [ ] **Step 5: Build legal routes**
 
@@ -738,7 +738,7 @@ Expected: PASS and generated route list includes localized home, terms, and priv
 
 Modify `app/sitemap.ts` so each path has entries for `/`, `/terms`, `/privacy`, plus locale-prefixed versions for every non-English locale.
 
-Use `NEXT_PUBLIC_SITE_URL || "https://darusamajparty.online"` as the base URL.
+Use `NEXT_PUBLIC_SITE_URL || "https://darusamajparty.info"` as the base URL.
 
 - [ ] **Step 2: Add QA localized route checks**
 
@@ -812,8 +812,8 @@ Expected:
 
 - Add these Vercel environment variables only if translation generation will run in CI: `GOOGLE_CLOUD_PROJECT_ID`, `GOOGLE_APPLICATION_CREDENTIALS`, and `GOOGLE_TRANSLATE_LOCATION`.
 - For the recommended local generation workflow, do not add Google credentials to Vercel. Generate and review dictionaries locally, commit the generated locale files, then deploy as static Next.js content.
-- Update `NEXT_PUBLIC_SITE_URL` to `https://darusamajparty.online` in Vercel so sitemap URLs are correct.
-- After deployment, verify `https://darusamajparty.online/hi`, `/mr`, `/ta`, and `/ur` directly.
+- Update `NEXT_PUBLIC_SITE_URL` to `https://darusamajparty.info` in Vercel so sitemap URLs are correct.
+- After deployment, verify `https://darusamajparty.info/hi`, `/mr`, `/ta`, and `/ur` directly.
 
 ## Plan Self-Review
 
