@@ -1,4 +1,10 @@
 {
+  "instagramWarning": {
+    "text": "Membership card download does not work inside Instagram's browser. Open this website in Chrome or Safari, then generate and download your card.",
+    "copy": "Copy link",
+    "copied": "Copied!",
+    "dismiss": "Dismiss"
+  },
   "meta": {
     "title": "Daru Samaj Party | Join The Movement",
     "description": "Join Daru Samaj Party, a community movement standing for the dignity and rights of responsible adult drinkers. Get your Instagram-ready membership card.",
@@ -124,7 +130,7 @@
     "supabaseFallback": "Could not save the membership. Check Supabase setup.",
     "downloadPhotoRequired": "Upload a photo before downloading the JPG card.",
     "downloadFallback": "Could not export the JPG card. Try again after the photo loads.",
-    "downloadInstagramFallback": "Instagram blocked the direct download. Your card is ready below: press and hold the image, then save it to your phone.",
+    "downloadInstagramFallback": "Instagram blocked the direct download. Try a real browser like Chrome or Safari. Your card is ready below — you may take a screenshot.",
     "loading": {
       "submitting": "Creating your card...",
       "downloading": "Preparing your JPG..."

@@ -39,6 +39,7 @@ const initialForm: FormState = {
 
 const MAX_PHOTO_BYTES = 5 * 1024 * 1024;
 const IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+const MIN_FONT_SIZE = 8;
 const DSP_LOGO_SRC = "/assets/dsp-logo.jpeg";
 const WHISKEY_BOTTLE_SRC = "/assets/whiskey-bottle.svg";
 const DSP_WEBSITE_QR_SRC = "/assets/dsp-website-qr.svg";
@@ -284,7 +285,13 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
 
       setMember(record);
       setStatus(`${messages.statusGenerated} ${record.membershipId}`);
-      await downloadCard(record, photoPreview);
+      try {
+        await downloadCard(record, photoPreview);
+      } catch (downloadErr) {
+        console.error('Download failed:', downloadErr);
+        // Card was saved; only the download step failed — surface a non-fatal message.
+        setError(messages.downloadFallback);
+      }
     } catch (submitError) {
       const message =
         submitError instanceof Error
@@ -303,24 +310,55 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
       return;
     }
     const cardPhotoUrl = overridePhotoUrl ?? previewMember.photoUrl;
-    if (!cardPhotoUrl) {
+    if (!cardPhotoUrl || typeof cardPhotoUrl !== 'string' || cardPhotoUrl.trim() === '') {
       setError(messages.downloadPhotoRequired);
       return;
     }
     const generatedMembershipId = activeMember.membershipId;
     setIsDownloading(true);
     setError("");
+    // Capture and clear the previous preview URL; revoke it in finally so it always runs.
+    let previousPreviewUrl = "";
     setCardSavePreviewUrl((currentUrl) => {
-      if (currentUrl) URL.revokeObjectURL(currentUrl);
+      previousPreviewUrl = currentUrl;
       return "";
     });
     try {
-      const [image, logo, bottle, websiteQr] = await Promise.all([
+      const [imageResult, logoResult, bottleResult, websiteQrResult] = await Promise.allSettled([
         loadCanvasImage(cardPhotoUrl),
         loadCanvasImage(DSP_LOGO_SRC),
         loadCanvasImage(WHISKEY_BOTTLE_SRC),
         loadCanvasImage(DSP_WEBSITE_QR_SRC),
       ]);
+
+      // Member photo is required — fail fast if it could not be loaded.
+      if (imageResult.status === 'rejected') {
+        throw new Error(`Could not load member photo: ${imageResult.reason}`);
+      }
+      const image = imageResult.value;
+
+      // Static assets (logo, bottle, QR) are optional — log failures but continue.
+      if (logoResult.status === 'rejected') {
+        console.error('Could not load DSP logo:', logoResult.reason);
+      }
+      if (bottleResult.status === 'rejected') {
+        console.error('Could not load whiskey bottle asset:', bottleResult.reason);
+      }
+      if (websiteQrResult.status === 'rejected') {
+        console.error('Could not load website QR asset:', websiteQrResult.reason);
+      }
+
+      // Use a transparent 1×1 canvas image as a safe no-op fallback for optional assets.
+      const createFallbackImage = () => {
+        const fb = document.createElement('canvas');
+        fb.width = 1; fb.height = 1;
+        const fi = new window.Image();
+        fi.src = fb.toDataURL();
+        return fi;
+      };
+      const logo = logoResult.status === 'fulfilled' ? logoResult.value : createFallbackImage();
+      const bottle = bottleResult.status === 'fulfilled' ? bottleResult.value : createFallbackImage();
+      const websiteQr = websiteQrResult.status === 'fulfilled' ? websiteQrResult.value : createFallbackImage();
       const canvas = document.createElement("canvas");
       canvas.width = 1080;
       canvas.height = 1350;
@@ -439,14 +477,14 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
       //   dividers sit 28px below each row baseline
 
       // Name
-      const nameSize = fitText(ctx, previewMember.name.toUpperCase(), IW - 64, 60, "Impact, Arial Black, sans-serif", "400", 22);
+      const nameSize = Math.max(fitText(ctx, previewMember.name.toUpperCase(), IW - 64, 60, "Impact, Arial Black, sans-serif", "400", 22), MIN_FONT_SIZE);
       ctx.fillStyle = "#fff3d4";
       ctx.font = `400 ${nameSize}px Impact, Arial Black, sans-serif`;
       ctx.fillText(previewMember.name.toUpperCase(), IPX, CT + 80);
       drawDiv(CT + 116);
 
       // Instagram handle
-      const handleSize = fitText(ctx, previewMember.instagram.toUpperCase(), IW - 64, 48, "Impact, Arial Black, sans-serif", "400", 26);
+      const handleSize = Math.max(fitText(ctx, previewMember.instagram.toUpperCase(), IW - 64, 48, "Impact, Arial Black, sans-serif", "400", 26), MIN_FONT_SIZE);
       ctx.fillStyle = "#c8ff43";
       ctx.font = `400 ${handleSize}px Impact, Arial Black, sans-serif`;
       ctx.fillText(previewMember.instagram.toUpperCase(), IPX, CT + 206);
@@ -456,7 +494,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
       ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
       ctx.font = "900 22px Arial, sans-serif";
       ctx.fillText(messages.card.state.toUpperCase(), IPX, CT + 306);
-      const stateSize = fitText(ctx, previewMember.state.toUpperCase(), IW - 64, 50, "Arial, sans-serif", "900", 22);
+      const stateSize = Math.max(fitText(ctx, previewMember.state.toUpperCase(), IW - 64, 50, "Arial, sans-serif", "900", 22), MIN_FONT_SIZE);
       ctx.fillStyle = "#fff3d4";
       ctx.font = `900 ${stateSize}px Arial, sans-serif`;
       ctx.fillText(previewMember.state.toUpperCase(), IPX, CT + 368);
@@ -466,7 +504,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
       ctx.fillStyle = "rgba(255, 243, 212, 0.62)";
       ctx.font = "900 22px Arial, sans-serif";
       ctx.fillText(messages.card.district.toUpperCase(), IPX, CT + 470);
-      const districtSize = fitText(ctx, previewMember.district.toUpperCase(), IW - 64, 50, "Arial, sans-serif", "900", 22);
+      const districtSize = Math.max(fitText(ctx, previewMember.district.toUpperCase(), IW - 64, 50, "Arial, sans-serif", "900", 22), MIN_FONT_SIZE);
       ctx.fillStyle = "#fff3d4";
       ctx.font = `900 ${districtSize}px Arial, sans-serif`;
       ctx.fillText(previewMember.district.toUpperCase(), IPX, CT + 532);
@@ -516,7 +554,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
       ctx.fillStyle = "#7b1719";
       ctx.fillRect(76, IDY + 48, idBoxW, 78);
 
-      const idSize = fitText(ctx, generatedMembershipId, idBoxW - 20, 52, "Impact, Arial Black, sans-serif", "400");
+      const idSize = Math.max(fitText(ctx, generatedMembershipId, idBoxW - 20, 52, "Impact, Arial Black, sans-serif", "400"), MIN_FONT_SIZE);
       ctx.fillStyle = "#ffd43b";
       ctx.font = `400 ${idSize}px Impact, Arial Black, sans-serif`;
       ctx.fillText(generatedMembershipId, idCX, IDY + 104);
@@ -566,9 +604,11 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
         setCardSavePreviewUrl(result.url);
         setStatus(messages.downloadInstagramFallback);
       }
-    } catch {
+    } catch (err) {
+      console.error('Card generation failed:', err);
       setError(messages.downloadFallback);
     } finally {
+      if (previousPreviewUrl) URL.revokeObjectURL(previousPreviewUrl);
       setIsDownloading(false);
     }
   };

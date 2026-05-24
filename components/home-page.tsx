@@ -1,4 +1,5 @@
 import JoinExperience from "./join-experience";
+import InstagramWarningBanner from "./instagram-warning-banner";
 import LanguageSwitcher from "./language-switcher";
 import { localizedPath, localeDirections, type Locale } from "../lib/i18n/locales";
 import type { Messages } from "../lib/i18n/messages";
@@ -63,6 +64,7 @@ export default function HomePage({ locale, messages }: HomePageProps) {
 
   return (
     <div lang={locale} dir={localeDirections[locale]}>
+      <InstagramWarningBanner messages={messages.instagramWarning} />
       <div className="page-texture" aria-hidden="true" />
       <div className="social-dock" aria-label="Social media links">
         {socialLinks.map((link) => (
@@ -71,7 +73,7 @@ export default function HomePage({ locale, messages }: HomePageProps) {
             href={link.href}
             key={link.name}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             aria-label={`${messages.social.openLabel} ${link.name}`}
             title={link.name}
           >
@@ -137,7 +139,7 @@ export default function HomePage({ locale, messages }: HomePageProps) {
         <section className="ticker" aria-label="Campaign highlights">
           <div className="ticker-track">
             {[...messages.ticker, ...messages.ticker].map((item, index) => (
-              <span key={`${item}-${index}`}>{item}</span>
+              <span key={`ticker-${index}`}>{item}</span>
             ))}
           </div>
         </section>
