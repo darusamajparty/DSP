@@ -1,6 +1,9 @@
 {
   "instagramWarning": {
     "text": "Membership card download does not work inside Instagram's browser. Open this website in Chrome or Safari, then generate and download your card.",
+    "textIos": "Downloads don't work in Instagram's browser. Tap ··· at the bottom, then tap \"Open in external browser\".",
+    "textAndroid": "Opening Chrome automatically…",
+    "textAndroidFailed": "Could not open Chrome automatically. Copy the link and open it in Chrome or another browser.",
     "copy": "Copy link",
     "copied": "Copied!",
     "dismiss": "Dismiss"
