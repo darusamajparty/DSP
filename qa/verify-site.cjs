@@ -70,7 +70,7 @@ function readJpegDimensions(filePath) {
   await desktop.fill('input[name="instagram"]', "@dsp_member");
   await desktop.setInputFiles('input[name="photo"]', sampleImage);
   await desktop.locator(".card-photo img").waitFor({ state: "visible" });
-  await desktop.click('button:has-text("Generate Membership Card")');
+  await desktop.click('button:has-text("Download")');
   await desktop.waitForFunction(() => {
     const text = document.querySelector(".form-status")?.textContent || "";
     return (

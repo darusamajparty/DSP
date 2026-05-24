@@ -254,7 +254,7 @@ export const en = {
       state: "State",
       district: "District",
       photo: "Photo",
-      submit: "Generate Membership Card",
+      submit: "Download",
       submitting: "Generating...",
       download: "Download JPG",
       downloading: "Preparing JPG...",

@@ -24,6 +24,9 @@ type FormState = {
 };
 
 type PreviewMember = Omit<MemberRecord, "membershipId">;
+type SaveCardResult =
+  | { kind: "downloaded" }
+  | { kind: "preview"; url: string };
 
 const initialForm: FormState = {
   name: "",
@@ -64,21 +67,28 @@ function canvasToJpegBlob(canvas: HTMLCanvasElement) {
   });
 }
 
-async function saveCardImage(canvas: HTMLCanvasElement, fileName: string) {
+async function saveCardImage(canvas: HTMLCanvasElement, fileName: string): Promise<SaveCardResult> {
   const blob = await canvasToJpegBlob(canvas);
   const file = new File([blob], fileName, { type: "image/jpeg" });
 
-  if (
-    isInstagramInAppBrowser() &&
-    typeof navigator.canShare === "function" &&
-    typeof navigator.share === "function" &&
-    navigator.canShare({ files: [file] })
-  ) {
-    await navigator.share({
-      files: [file],
-      title: "DSP Membership Card",
-    });
-    return;
+  if (isInstagramInAppBrowser()) {
+    if (
+      typeof navigator.canShare === "function" &&
+      typeof navigator.share === "function" &&
+      navigator.canShare({ files: [file] })
+    ) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: "DSP Membership Card",
+        });
+        return { kind: "downloaded" };
+      } catch {
+        // Instagram webviews vary by OS/version. If sharing fails, keep the image in-page.
+      }
+    }
+
+    return { kind: "preview", url: URL.createObjectURL(blob) };
   }
 
   const url = URL.createObjectURL(blob);
@@ -89,6 +99,7 @@ async function saveCardImage(canvas: HTMLCanvasElement, fileName: string) {
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  return { kind: "downloaded" };
 }
 
 
@@ -190,6 +201,7 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [cardSavePreviewUrl, setCardSavePreviewUrl] = useState("");
   const cardRef = useRef<HTMLDivElement>(null);
 
   const previewMember = useMemo<PreviewMember>(
@@ -298,6 +310,10 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
     const generatedMembershipId = activeMember.membershipId;
     setIsDownloading(true);
     setError("");
+    setCardSavePreviewUrl((currentUrl) => {
+      if (currentUrl) URL.revokeObjectURL(currentUrl);
+      return "";
+    });
     try {
       const [image, logo, bottle, websiteQr] = await Promise.all([
         loadCanvasImage(cardPhotoUrl),
@@ -545,7 +561,11 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
 
       ctx.textAlign = "left";
 
-      await saveCardImage(canvas, `${generatedMembershipId}-dsp-card.jpg`);
+      const result = await saveCardImage(canvas, `${generatedMembershipId}-dsp-card.jpg`);
+      if (result.kind === "preview") {
+        setCardSavePreviewUrl(result.url);
+        setStatus(messages.downloadInstagramFallback);
+      }
     } catch {
       setError(messages.downloadFallback);
     } finally {
@@ -753,6 +773,13 @@ export default function JoinExperience({ messages }: JoinExperienceProps) {
               </button>
             )}
           </div>
+
+          {cardSavePreviewUrl && (
+            <div className="card-save-fallback" role="status" aria-live="polite">
+              <p>{messages.downloadInstagramFallback}</p>
+              <img src={cardSavePreviewUrl} alt="Generated DSP membership card JPG" />
+            </div>
+          )}
         </div>
       </div>
     </section>

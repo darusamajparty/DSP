@@ -124,6 +124,7 @@
     "supabaseFallback": "Could not save the membership. Check Supabase setup.",
     "downloadPhotoRequired": "Upload a photo before downloading the JPG card.",
     "downloadFallback": "Could not export the JPG card. Try again after the photo loads.",
+    "downloadInstagramFallback": "Instagram blocked the direct download. Your card is ready below: press and hold the image, then save it to your phone.",
     "loading": {
       "submitting": "Creating your card...",
       "downloading": "Preparing your JPG..."
@@ -137,7 +138,7 @@
       "district": "District",
       "photo": "Photo",
       "photoHelp": "JPG, PNG, or WebP. Maximum 5MB.",
-      "submit": "Generate Membership Card",
+      "submit": "Download",
       "submitting": "Generating...",
       "download": "Download JPG",
       "downloading": "Preparing JPG...",
@@ -145,11 +146,11 @@
     },
     "placeholders": {
       "name": "Your full name",
-      "email": "you@example.com",
+      "email": "you@gmail.com",
       "phone": "+91 98765 43210",
       "instagram": "@username",
-      "state": "Maharashtra",
-      "district": "Mumbai Suburban"
+      "state": "Uttar Pradesh",
+      "district": "Varanasi"
     },
     "validation": {
       "name": "Enter your name.",
